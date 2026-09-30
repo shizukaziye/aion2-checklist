@@ -339,6 +339,28 @@ details.method p,details.method li{font-size:13px;color:var(--text)}
 Line 2:  Drill Dart → Burst Arrow → Tempest Shot
 Line 3:  Vaizel's Authority → Supporting Fire → Bow of Blessing</div>
       <div class='callout bad'>Keep these <b>out</b> of the macro and on your own fingers: Deadshot (the charge gets interrupted), Marking Shot, Defiance, traps, movement, and any boss-specific cooldown. The three most common Ranger mistakes are charging Deadshot without Precision, charging it right before a forced move, and treating Burst Arrow or Scattershot as unconditional filler.</div>
+
+      <h3>Setting it up, click by click</h3>
+      <p>Use the game's own macro window only. Mouse-software macros break the EULA and get accounts restricted.</p>
+      <p><b>1. Bind the key.</b> Escape, <b>Settings</b>, <b>Key Settings</b>, <b>General</b> tab, scroll to <b>Gameplay</b>, find the <b>Macro</b> row (empty by default), click it and press a key. A side mouse button or right mouse button is best, because you hold it for whole fights. While here, turn <b>Skill Queue</b> on.</p>
+      <p><b>2. Build it.</b> Open the <b>Skill</b> window. Top right is a <b>Macro</b> button with 1, 2, 3 next to it (one macro per skill preset; stay on 1). Click Macro. You get numbered slots, each with a <b>Delay</b> box. Click a slot, pick a skill. Fill them in this order, skipping what you don't have yet:</p>
+      <table>
+        <tr><th>Slot</th><th>Skill</th><th>When you get it</th></tr>
+        <tr><td>1</td><td>Drill Dart</td><td>early</td></tr>
+        <tr><td>2</td><td>Tempest Shot</td><td>Lv 16</td></tr>
+        <tr><td>3</td><td>Gale Arrow</td><td>early</td></tr>
+        <tr><td>4</td><td>Snare Shot</td><td>early</td></tr>
+        <tr><td>5</td><td>Explosive Arrow</td><td>stigma</td></tr>
+        <tr><td>6</td><td>Griffon Arrow</td><td>stigma, if taken</td></tr>
+        <tr><td>7</td><td>Vaizel's Authority</td><td>stigma, Lv 22–23</td></tr>
+        <tr><td>8</td><td>Supporting Fire</td><td>stigma</td></tr>
+        <tr><td>9</td><td>Bow of Blessing</td><td>stigma</td></tr>
+      </table>
+      <p>Type <b>10</b> in every Delay box and hit Confirm. Turn on <b>Repeat while key is held</b>. Close the window; it saves itself. Ping 80 or higher: use 40 instead of 10.</p>
+      <p><b>3. Hotbar.</b> Drag these onto keys of their own: <b>Deadshot</b> (1), <b>Marking Shot</b> (2), <b>Defiance</b> (3), <b>Arrow Scattershot</b> (4).</p>
+      <p><b>4. In a fight.</b> Press 2. Hold left mouse (Snipe) and hold the macro key. Press 1 whenever Deadshot lights up. Press 2 again every 15 s, standing still. Press 3 when something bad lands on you.</p>
+      <p><b>5. Test it</b> on a training scarecrow with the Combat Analysis window (<b>Ctrl + X</b>). If Deadshot almost never comes back, a buff or toggle got into the macro; take it out.</p>
+      <p class='hint'>Some players keep slots 7 to 9 as a second macro on preset 2 so the three burst buffs can be popped together on a boss instead of firing on cooldown during trash. Optional.</p>
     </div>
 
     <h2>Skill points: what to level first</h2>
@@ -625,7 +647,9 @@ weekly:{title:'Weekly',sections:[
 ranger:{title:'Ranger',sections:[
  {h:'Settings and controls',items:[
   {id:'rg_queue',t:'Skill Queue option turned on',n:'Lets held keys chain skills without gaps.'},
-  {id:'rg_macro',t:'In-game macro built (3 lines, 10 ms delay)',n:'Gale Arrow, Griffon Arrow, Snare Shot, Explosive Arrow / Drill Dart, Burst Arrow, Tempest Shot / Vaizel’s Authority, Supporting Fire, Bow of Blessing.'},
+  {id:'rg_key',t:'Macro key bound (Settings → Key Settings → General → Gameplay → Macro)',n:'Side mouse button or right click.'},
+  {id:'rg_macro',t:'In-game macro built, 10 ms every slot, Repeat while held on',n:'Drill Dart, Tempest Shot, Gale Arrow, Snare Shot, then the stigmas as you get them: Explosive Arrow, Griffon Arrow, Vaizel’s Authority, Supporting Fire, Bow of Blessing. Steps in the Rotation section above.'},
+  {id:'rg_test',t:'Tested on a scarecrow with Combat Analysis (Ctrl + X)',n:'Deadshot should come back often. If not, something in the macro is blocking the Snipe chain.'},
   {id:'rg_manual',t:'Deadshot, Marking Shot, Defiance and traps on their own keys',n:'Never in the macro.'},
   {id:'rg_dodge',t:'Dodge key comfortable, stamina bar visible',n:''},
  ]},
