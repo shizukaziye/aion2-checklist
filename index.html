@@ -98,6 +98,15 @@ details.method{margin-top:26px;background:var(--panel);border:1px solid var(--bo
 details.method summary{cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:700;padding:8px 0}
 details.method p,details.method li{font-size:13px;color:var(--text)}
 .view{display:none}.view.active{display:block}
+input[type=range]{accent-color:var(--accent);margin:6px 0 0}
+.lvticks{display:flex;justify-content:space-between;font-size:10px;color:var(--dim);margin-bottom:8px}
+.plan h3{margin-top:16px}
+.plan h3:first-child{margin-top:6px}
+.plan .new{display:inline-block;font-size:10px;font-weight:700;color:#06121f;background:var(--good);border-radius:4px;padding:0 5px;margin-left:6px;vertical-align:1px}
+.plan .key{display:inline-block;min-width:26px;text-align:center;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:11px;background:var(--panel2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-right:6px}
+.plan ol,.plan ul{margin:4px 0}
+.plan .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.plan .grid2{grid-template-columns:1fr}}
 @media (max-width:520px){.t{font-size:13px}.ctr .v{min-width:38px}.kv{grid-template-columns:1fr}.kv b{margin-top:6px}}
 </style>
 </head><body>
@@ -293,6 +302,13 @@ details.method p,details.method li{font-size:13px;color:var(--text)}
       <p>Bow, physical ranged damage, about <b>20 metres</b> of reach. You win by standing where the enemy is not: keep your distance, slow or root what comes at you, and dodge the telegraphed hits. You are squishy (survivability is the class's weak stat), so spacing is your armor. Dodging costs stamina; use it for the dangerous swings, not for every attack.</p>
       <p>Your damage has one idea behind it: <b>Marking Shot</b> puts a "Precision" state on you, <b>Deadshot</b> hits far harder while Precision is up, and <b>Gale Arrow</b> speeds you up so you fit more shots in. Most everything else is filler, buffs, or a condition (slowed, staggered) that turns a weak skill into a strong one. Rangers scale with <b>critical hit</b>; that is the stat the whole build pulls toward.</p>
       <div class='callout good'>Leveling summary from the guides: "kite backwards forever, zero gear needed." Ranger is one of the three fastest levelers and the most forgiving first character.</div>
+    </div>
+
+    <h2>Your build at level <span id='rg_lvlbl' class='accent'>1</span> <span class='sub'>drag the slider; it remembers</span></h2>
+    <div class='panel'>
+      <input type='range' id='rg_lv' min='1' max='45' step='1' value='1' style='width:100%' oninput='setRangerLv(this.value)'>
+      <div class='lvticks'><span>1</span><span>7</span><span>14</span><span>22</span><span>30</span><span>45</span></div>
+      <div id='rg_plan'></div>
     </div>
 
     <h2>Skills cheat sheet <span class='sub'>names as the global client shows them; older guides use Korean-translated names in brackets</span></h2>
@@ -688,9 +704,131 @@ const TABS=['start','ranger','day1','week1','daily','weekly','settings'];
 const TABNAME={start:'Start here',ranger:'Ranger',day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
 const DEF_CFG={resetHour:5,resetDay:3,startDate:'2026-09-30'};
 
+// ---------- Ranger level planner (pure data + pure functions) ----------
+// use: basic (held), macro (in the macro, in this order), manual (own key), sit (situational key), skip
+const RG_SKILLS=[
+ {n:'Snipe',t:'a',lv:1,use:'basic',key:'LMB',d:'Basic attack, 20 m. Restores MP; every hit shortens Deadshot’s cooldown.'},
+ {n:'Marking Shot',t:'a',lv:1,use:'manual',key:'2',d:'Gives you Precision (+Critical Hit). Deadshot hits 35% harder while it’s up.'},
+ {n:'Tempest Shot',t:'a',lv:1,use:'macro',ord:2,d:'Hits the target and up to 4 enemies near it.'},
+ {n:'Snare Shot',t:'a',lv:1,use:'macro',ord:3,d:'Slows the target 40% for 5 s. Turns Burst Arrow and Explosive Arrow on.'},
+ {n:'Drill Dart',t:'a',lv:1,use:'macro',ord:7,d:'Bleed. Restores MP on a crit. A main damage source.'},
+ {n:'Arrow Scattershot',t:'a',lv:5,use:'sit',key:'5',d:'Only hits a staggered target. Boss stagger windows.'},
+ {n:'Gale Arrow',t:'a',lv:7,use:'macro',ord:1,d:'+7% Combat Speed buff. Keeps the whole rotation fast.'},
+ {n:'Explosion Trap',t:'a',lv:8,use:'manual',key:'3',d:'Trap at your feet, 40% stun. Drop it when something gets close, then back off.'},
+ {n:'Burst Arrow',t:'a',lv:10,use:'macro',ord:4,d:'Hard hit, only on a slowed or rooted target. Goes right after Snare Shot.'},
+ {n:'Suppressing Arrow',t:'a',lv:12,use:'sit',key:'4',d:'40% stun while Precision is up. Interrupt.'},
+ {n:'Deadshot',t:'a',lv:14,use:'manual',key:'1',d:'Charged shot, your biggest hit. Press when it lights up and you can stand still.'},
+ {n:'Defiance',t:'a',lv:16,use:'sit',key:'6',d:'Cleanses crowd control, 5 s immunity. Panic button.'},
+ {n:'Vigilant Eye',t:'p',lv:1,d:'Evasion, max HP.'},
+ {n:'Concentrated Fire',t:'p',lv:6,d:'50% chance of an extra hit on bleeding targets.'},
+ {n:'Wind Vigor',t:'p',lv:9,d:'Stamina and move speed when attacked.'},
+ {n:'Focused Eye',t:'p',lv:11,d:'Accuracy and PvE damage. Mandatory; level it.'},
+ {n:'Hunter’s Resolve',t:'p',lv:13,d:'Critical Damage. Mandatory; level it.'},
+ {n:'Unyielding Resolve',t:'p',lv:15,d:'Ailment resist.'},
+ {n:'Rooting Eye',t:'p',lv:17,d:'50% extra hit on slowed or rooted targets. Pairs with Snare Shot.'},
+ {n:'Melee Fire',t:'p',lv:21,d:'+25% damage beyond 5 m. Reward for keeping distance.'},
+ {n:'Revitalization Contract',t:'p',lv:23,d:'Status resist, heal under 10% HP.'},
+ {n:'Hunter’s Soul',t:'p',lv:25,d:'50% extra hit on crits. Strong with Vaizel’s Authority.'},
+ {n:'Vaizel’s Authority',t:'s',lv:22,use:'macro',ord:8,pri:1,d:'+20% Attack. The number-one stigma.'},
+ {n:'Supporting Fire',t:'s',lv:22,use:'macro',ord:9,pri:2,d:'Summons an orb that shoots with you for 15 s.'},
+ {n:'Bow of Blessing',t:'s',lv:22,use:'macro',ord:10,pri:3,d:'+200 Critical Hit, +100 Accuracy.'},
+ {n:'Explosive Arrow',t:'s',lv:22,use:'macro',ord:5,pri:4,d:'Big hit, +20% on a slowed or rooted target.'},
+ {n:'Griffon Arrow',t:'s',lv:22,use:'macro',ord:6,pri:5,d:'Burn damage over time.'},
+ {n:'Mother Nature’s Breath',t:'s',lv:22,use:'sit',key:'7',pri:6,d:'Damage reduction, 25% absorb chance. Swap in for Explosive Arrow in dungeons you don’t know yet.'},
+ {n:'Arrow Storm',t:'s',lv:22,use:'sit',key:'8',pri:7,d:'Area stun on up to 4 enemies. Packs and PvP.'},
+ {n:'Illusory Arrow',t:'s',lv:22,use:'skip',d:'Blind. Alternative slot; manual.'},
+ {n:'Ambush Kick',t:'s',lv:22,use:'skip',d:'Teleport behind and knock away. PvP.'},
+ {n:'Ensnaring Trap',t:'s',lv:22,use:'skip',d:'Airborne trap. PvP.'},
+ {n:'Sealing Arrow',t:'s',lv:22,use:'skip',d:'Seal. PvP.'},
+ {n:'Assault Smite',t:'s',lv:22,use:'skip',d:'Melee stun. Not for a bow.'},
+ {n:'Stealth',t:'s',lv:22,use:'skip',d:'10 s invisibility out of combat.'},
+];
+const RG_BOARDS=[{lv:12,n:'Nezekan',f:'Combat Speed and cooldown nodes.'},{lv:20,n:'Zikel',f:'Damage Boost.'},{lv:30,n:'Vaizel',f:'Critical Damage. Your best board.'},{lv:40,n:'Triniel',f:'Multi-hit.'},{lv:45,n:'Ariel',f:'PvE stat board, fed by Ascension Trial. Before Azphel (PvP).'}];
+const RG_STIGMA_SLOTS=5;
+function rgPlan(L){
+  const have=RG_SKILLS.filter(s=>s.lv<=L);
+  const isNew=s=>s.lv===L;
+  const macro=have.filter(s=>s.use==='macro').sort((a,b)=>a.ord-b.ord);
+  const stigmas=have.filter(s=>s.t==='s'&&s.pri).sort((a,b)=>a.pri-b.pri).slice(0,RG_STIGMA_SLOTS);
+  const stigNames=new Set(stigmas.map(s=>s.n));
+  const macroEq=macro.filter(s=>s.t!=='s'||stigNames.has(s.n));
+  const manual=have.filter(s=>(s.use==='manual'||s.use==='sit'||s.use==='basic')&&(s.t!=='s'||stigNames.has(s.n)));
+  const passives=have.filter(s=>s.t==='p');
+  const next=RG_SKILLS.filter(s=>s.lv>L).sort((a,b)=>a.lv-b.lv);
+  const nextLv=next.length?next[0].lv:null;
+  const nextList=next.filter(s=>s.lv===nextLv);
+  const boards=RG_BOARDS.filter(b=>b.lv<=L);
+  const nextBoard=RG_BOARDS.find(b=>b.lv>L);
+  return {L,have,isNew,macro:macroEq,stigmas,manual,passives,nextLv,nextList,boards,nextBoard};
+}
+function rgPoints(L){
+  const o=[];
+  if(L<14){o.push('Snipe first (it is most of your damage until Deadshot), then Gale Arrow, then Drill Dart, each toward level 8.');}
+  else if(L<22){o.push('Deadshot, Gale Arrow, Drill Dart to level 8, then to 12. These three are the build.');
+    o.push('Focused Eye and Hunter’s Resolve as high as they go. They beat any optional skill.');
+    o.push('Snipe toward 16. Snare Shot and Burst Arrow to 12 and stop.');}
+  else{o.push('Skill points: Deadshot, Gale Arrow, Drill Dart to 12 (16 if cheap); Focused Eye + Hunter’s Resolve maxed; Snipe and Tempest Shot to 16; Snare Shot and Burst Arrow stay at 12.');
+    o.push('Stigma shards: every shard into Vaizel’s Authority, then Supporting Fire, then Bow of Blessing. Nothing else until those three are high.');
+    o.push('Abyss Points: purchase contracts for stigmas, not gear, until the three core stigmas are in.');}
+  if(L>=45)o.push('At cap: Daevanion gold nodes on every board, then blue nodes for Deadshot / Gale Arrow / Drill Dart, then green for the two passives. Soul-bind rings with +levels on those three skills.');
+  return o;
+}
+function rgRotation(p){
+  const L=p.L,has=n=>p.have.some(s=>s.n===n)&&(RG_SKILLS.find(s=>s.n===n).t!=='s'||p.stigmas.some(s=>s.n===n));
+  const o=[];
+  o.push('Before the fight: press <b>Marking Shot</b>.'+(has('Vaizel’s Authority')?' Then pop <b>Vaizel’s Authority</b>, <b>Supporting Fire</b> and <b>Bow of Blessing</b> if you keep them off the macro for bosses.':''));
+  o.push('Hold <b>left mouse</b> (Snipe) and hold the <b>macro key</b>. Keep both held. The macro fires '+p.macro.map(s=>s.n).join(', ')+' whenever each is ready.');
+  if(has('Deadshot'))o.push('When <b>Deadshot</b> lights up, press it and let it charge. Only when nothing is about to hit you: moving cancels the charge.');
+  o.push('When the Precision icon fades (every 7–15 s), press <b>Marking Shot</b> again, standing still.');
+  if(has('Explosion Trap'))o.push('Something reaches you: drop <b>Explosion Trap</b>, walk backwards, keep both buttons held.');
+  else o.push('Something reaches you: walk backwards while shooting. Nothing needs to touch you.');
+  if(has('Suppressing Arrow'))o.push('Need an interrupt: <b>Suppressing Arrow</b> (40% stun while Precision is up).');
+  if(has('Defiance'))o.push('Stunned, rooted or debuffed: <b>Defiance</b>.');
+  if(has('Arrow Scattershot'))o.push('Boss shows a stagger bar: spam <b>Arrow Scattershot</b> until it ends.');
+  if(has('Mother Nature’s Breath'))o.push('Learning a new dungeon: swap Explosive Arrow for <b>Mother Nature’s Breath</b> and press it before big hits.');
+  o.push('Big telegraphed attack: dodge, then go back to holding.');
+  return o;
+}
+function setRangerLv(v){S.rangerLv=Math.max(1,Math.min(45,+v||1));save();renderRangerPlan();}
+function renderRangerPlan(){
+  const L=S.rangerLv||1;$('rg_lv').value=L;$('rg_lvlbl').textContent=L;
+  const p=rgPlan(L);const nw=s=>p.isNew(s)?"<span class='new'>NEW</span>":'';
+  let h="<div class='plan'>";
+  // what's new / next
+  const newOnes=p.have.filter(p.isNew);
+  if(newOnes.length)h+=`<div class='callout good'><b>New at ${L}:</b> ${newOnes.map(s=>esc(s.n)+(s.t==='s'?' (stigma)':s.t==='p'?' (passive)':'')).join(', ')}.</div>`;
+  if(L===22)h+=`<div class='callout'><b>Stigmas unlock now.</b> Do the Ascension quest, then buy purchase contracts with Abyss Points at the Abyss merchant. First three: Vaizel’s Authority, Supporting Fire, Bow of Blessing. You may only have four slots at first; if so, skip Griffon Arrow.</div>`;
+  if(L===45)h+=`<div class='callout'><b>Cap.</b> Belt and amulet from the campaign. Switch to the Daily tab. Clear both Transcendence towers. Bow first for enhancement.</div>`;
+  if(p.nextLv)h+=`<p class='hint'>Next unlock at level ${p.nextLv}: ${p.nextList.map(s=>esc(s.n)).join(', ')}.${p.nextBoard?` Next Daevanion board: ${p.nextBoard.n} at ${p.nextBoard.lv}.`:''}</p>`;
+  // macro
+  h+=`<h3>Macro</h3>`;
+  h+=`<table><tr><th>Slot</th><th>Skill</th><th>Delay</th></tr>`;
+  p.macro.forEach((s,i)=>{h+=`<tr><td>${i+1}</td><td>${esc(s.n)}${nw(s)}${s.t==='s'?" <span class='dim'>(stigma)</span>":''}</td><td>10 ms</td></tr>`;});
+  h+=`</table><p class='hint'>Repeat while key is held: on. Ping 80+: use 40 ms. Snare Shot must sit before Burst Arrow${p.macro.some(s=>s.n==='Explosive Arrow')?' and Explosive Arrow':''}. Never add Snipe, Deadshot, Marking Shot or traps.${L<7?' You can set this up from level 1; it gets its real value at 7 when Gale Arrow joins.':''}</p>`;
+  // hotbar
+  h+=`<h3>Hotbar</h3><table><tr><th>Key</th><th>Skill</th><th>Use</th></tr>`;
+  const order={basic:0,manual:1,sit:2};
+  const bar=[...p.manual].sort((a,b)=>(order[a.use]-order[b.use])||((a.key||'').localeCompare(b.key||'')));
+  bar.forEach(s=>{h+=`<tr><td><span class='key'>${esc(s.key||'')}</span></td><td>${esc(s.n)}${nw(s)}</td><td class='dim'>${esc(s.d)}</td></tr>`;});
+  h+=`<tr><td><span class='key'>side</span></td><td>Macro</td><td class='dim'>Held the whole fight.</td></tr>`;
+  h+=`<tr><td><span class='key'>0</span></td><td>Health potion</td><td class='dim'></td></tr></table>`;
+  h+=`<p class='hint'>Macro skills go on the bar too (any free slot) so they count as equipped: ${p.macro.map(s=>esc(s.n)).join(', ')||'none yet'}. Not worth a slot right now: ${p.have.filter(s=>s.use==='skip'||(s.t==='s'&&s.pri&&!p.stigmas.some(x=>x.n===s.n))).map(s=>esc(s.n)).join(', ')||'nothing'}.</p>`;
+  // rotation
+  h+=`<h3>Rotation</h3><ol>${rgRotation(p).map(x=>`<li>${x}</li>`).join('')}</ol>`;
+  // stigmas
+  if(L>=22){h+=`<h3>Stigma loadout</h3><ol>${p.stigmas.map(s=>`<li><b>${esc(s.n)}</b> <span class='dim'>${esc(s.d)}</span></li>`).join('')}</ol><p class='hint'>Shard order is the list order. If you only have four slots, drop the last one.</p>`;}
+  // points
+  h+=`<h3>Where points go</h3><ul>${rgPoints(L).map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  // passives + boards
+  h+=`<div class='grid2'><div><h3>Passives you have</h3><ul>${p.passives.map(s=>`<li><b>${esc(s.n)}</b>${nw(s)} <span class='dim'>${esc(s.d)}</span></li>`).join('')||'<li class="dim">None yet.</li>'}</ul></div>`;
+  h+=`<div><h3>Daevanion boards open</h3><ul>${p.boards.map(b=>`<li><b>${b.n}</b>${b.lv===L?"<span class='new'>NEW</span>":''} <span class='dim'>${b.f}</span></li>`).join('')||'<li class="dim">First board (Nezekan) opens at 12.</li>'}</ul>${p.boards.length?"<p class='hint'>Gold nodes first, then blue nodes on Deadshot, Gale Arrow, Drill Dart, then green on Focused Eye and Hunter’s Resolve.</p>":''}</div></div>`;
+  h+="</div>";
+  $('rg_plan').innerHTML=h;
+}
+
 // ---------- state ----------
 let S=null, tab='start', showHidden=false;
-function blank(){return {done:{},cnt:{},hidden:{},custom:{ranger:[],day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'start'};}
+function blank(){return {done:{},cnt:{},hidden:{},custom:{ranger:[],day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'start',rangerLv:1};}
 function load(){
   try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}
   catch(e){S=blank();}
@@ -855,7 +993,7 @@ function renderTimers(){
 }
 function render(){
   for(const l of Object.keys(LISTS))renderList(l);
-  renderTabs();renderTimers();fillCfg();
+  renderTabs();renderTimers();fillCfg();renderRangerPlan();
 }
 
 // ---------- boot ----------
