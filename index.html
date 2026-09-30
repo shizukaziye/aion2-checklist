@@ -106,6 +106,10 @@ input[type=range]{accent-color:var(--accent);margin:6px 0 0}
 .plan .key{display:inline-block;min-width:26px;text-align:center;font-family:"SF Mono",Menlo,Consolas,monospace;font-size:11px;background:var(--panel2);border:1px solid var(--border);border-radius:4px;padding:1px 5px;margin-right:6px}
 .plan ol,.plan ul{margin:4px 0}
 .plan .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ownrow{display:flex;flex-wrap:wrap;gap:6px}
+.own{display:inline-flex;align-items:center;gap:5px;font-size:12px;background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:4px 9px;cursor:pointer;color:var(--dim)}
+.own.on{color:var(--text);border-color:var(--accent)}
+.own input{accent-color:var(--accent);margin:0}
 @media (max-width:640px){.plan .grid2{grid-template-columns:1fr}}
 @media (max-width:520px){.t{font-size:13px}.ctr .v{min-width:38px}.kv{grid-template-columns:1fr}.kv b{margin-top:6px}}
 </style>
@@ -745,12 +749,15 @@ const RG_SKILLS=[
 ];
 const RG_BOARDS=[{lv:12,n:'Nezekan',f:'Combat Speed and cooldown nodes.'},{lv:20,n:'Zikel',f:'Damage Boost.'},{lv:30,n:'Vaizel',f:'Critical Damage. Your best board.'},{lv:40,n:'Triniel',f:'Multi-hit.'},{lv:45,n:'Ariel',f:'PvE stat board, fed by Ascension Trial. Before Azphel (PvP).'}];
 const RG_STIGMA_SLOTS=5;
+function rgOwned(){return (S&&S.rgOwn)||{};}
 function rgPlan(L){
-  const have=RG_SKILLS.filter(s=>s.lv<=L);
-  const isNew=s=>s.lv===L;
+  const own=rgOwned();
+  const have=RG_SKILLS.filter(s=>s.lv<=L&&(s.t!=='s'||own[s.n]));
+  const isNew=s=>s.lv===L&&s.t!=='s';
   const macro=have.filter(s=>s.use==='macro').sort((a,b)=>a.ord-b.ord);
   const stigmas=have.filter(s=>s.t==='s'&&s.pri).sort((a,b)=>a.pri-b.pri).slice(0,RG_STIGMA_SLOTS);
   const stigNames=new Set(stigmas.map(s=>s.n));
+  const buyNext=L>=22?RG_SKILLS.filter(s=>s.t==='s'&&s.pri&&!own[s.n]).sort((a,b)=>a.pri-b.pri):[];
   const macroEq=macro.filter(s=>s.t!=='s'||stigNames.has(s.n));
   const manual=have.filter(s=>(s.use==='manual'||s.use==='sit'||s.use==='basic')&&(s.t!=='s'||stigNames.has(s.n)));
   const passives=have.filter(s=>s.t==='p');
@@ -759,8 +766,9 @@ function rgPlan(L){
   const nextList=next.filter(s=>s.lv===nextLv);
   const boards=RG_BOARDS.filter(b=>b.lv<=L);
   const nextBoard=RG_BOARDS.find(b=>b.lv>L);
-  return {L,have,isNew,macro:macroEq,stigmas,manual,passives,nextLv,nextList,boards,nextBoard};
+  return {L,have,isNew,macro:macroEq,stigmas,manual,passives,nextLv,nextList,boards,nextBoard,buyNext};
 }
+function toggleOwn(n){S.rgOwn=rgOwned();S.rgOwn[n]=!S.rgOwn[n];if(!S.rgOwn[n])delete S.rgOwn[n];save();renderRangerPlan();}
 function rgPoints(L){
   const o=[];
   if(L<14){o.push('Snipe first (it is most of your damage until Deadshot), then Gale Arrow, then Drill Dart, each toward level 8.');}
@@ -797,7 +805,16 @@ function renderRangerPlan(){
   // what's new / next
   const newOnes=p.have.filter(p.isNew);
   if(newOnes.length)h+=`<div class='callout good'><b>New at ${L}:</b> ${newOnes.map(s=>esc(s.n)+(s.t==='s'?' (stigma)':s.t==='p'?' (passive)':'')).join(', ')}.</div>`;
-  if(L===22)h+=`<div class='callout'><b>Stigmas unlock now.</b> Do the Ascension quest, then buy purchase contracts with Abyss Points at the Abyss merchant. First three: Vaizel’s Authority, Supporting Fire, Bow of Blessing. You may only have four slots at first; if so, skip Griffon Arrow.</div>`;
+  if(L===22)h+=`<div class='callout'><b>Stigmas unlock now.</b> Do the Ascension quest, then buy purchase contracts with Abyss Points at the Abyss merchant. Tick each one below as you get it and the macro and loadout update.</div>`;
+  if(L>=22){
+    const own=rgOwned();
+    h+=`<h3>Stigmas you own <span class='dim' style='font-weight:400;font-size:12px'>tick what you have</span></h3><div class='ownrow'>`;
+    RG_SKILLS.filter(s=>s.t==='s').sort((a,b)=>(a.pri||99)-(b.pri||99)).forEach(s=>{
+      h+=`<label class='own${own[s.n]?' on':''}'><input type='checkbox' ${own[s.n]?'checked':''} onchange='toggleOwn(${JSON.stringify(s.n)})'> ${esc(s.n)}${s.pri?`<span class='dim'> #${s.pri}</span>`:''}</label>`;});
+    h+=`</div>`;
+    if(p.buyNext.length)h+=`<div class='callout good'><b>Buy next:</b> ${esc(p.buyNext[0].n)}. <span class='dim'>${esc(p.buyNext[0].d)}</span> Then: ${p.buyNext.slice(1,4).map(s=>esc(s.n)).join(', ')||'nothing, you have the core set'}.</div>`;
+    else h+=`<div class='callout good'>You own the full recommended set.</div>`;
+  }
   if(L===45)h+=`<div class='callout'><b>Cap.</b> Belt and amulet from the campaign. Switch to the Daily tab. Clear both Transcendence towers. Bow first for enhancement.</div>`;
   if(p.nextLv)h+=`<p class='hint'>Next unlock at level ${p.nextLv}: ${p.nextList.map(s=>esc(s.n)).join(', ')}.${p.nextBoard?` Next Daevanion board: ${p.nextBoard.n} at ${p.nextBoard.lv}.`:''}</p>`;
   // macro
@@ -816,7 +833,7 @@ function renderRangerPlan(){
   // rotation
   h+=`<h3>Rotation</h3><ol>${rgRotation(p).map(x=>`<li>${x}</li>`).join('')}</ol>`;
   // stigmas
-  if(L>=22){h+=`<h3>Stigma loadout</h3><ol>${p.stigmas.map(s=>`<li><b>${esc(s.n)}</b> <span class='dim'>${esc(s.d)}</span></li>`).join('')}</ol><p class='hint'>Shard order is the list order. If you only have four slots, drop the last one.</p>`;}
+  if(L>=22){h+=`<h3>Stigma loadout</h3>`+(p.stigmas.length?`<ol>${p.stigmas.map(s=>`<li><b>${esc(s.n)}</b> <span class='dim'>${esc(s.d)}</span></li>`).join('')}</ol><p class='hint'>Shard order is the list order. Equip them all; put each in a free hotbar slot.</p>`:`<p class='dim'>None owned yet. Tick them above as you buy them.</p>`);}
   // points
   h+=`<h3>Where points go</h3><ul>${rgPoints(L).map(x=>`<li>${x}</li>`).join('')}</ul>`;
   // passives + boards
