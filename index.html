@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang='en'><head>
+<meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'>
+<title>Aion 2 Week One</title>
+<meta name='description' content='Day 1, week 1, and daily/weekly checklists for the Aion 2 global launch. Progress saves in your browser and dailies/weeklies reset themselves.'>
+<style>
+:root{
+  --bg:#0d1017;--panel:#161a24;--panel2:#1b2030;--border:#2a3142;--text:#e7e9ee;
+  --dim:#97a0b4;--accent:#66c7ff;--high:#ffb86b;--mid:#c78cff;--low:#6ad4ff;
+  --good:#6ee7a8;--bad:#ff7f7f;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text)}
+body{font:14px/1.5 -apple-system,BlinkMacSystemFont,"Inter","Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding:22px 16px 90px}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.02em}
+.tag{color:var(--dim);font-size:13px;margin-bottom:14px}
+h2{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:22px 0 8px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+h2 .sub{color:var(--dim);letter-spacing:0;text-transform:none;font-weight:500;font-size:12px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.good{color:var(--good)}.bad{color:var(--bad)}.accent{color:var(--accent)}.dim{color:var(--dim)}
+code,.mono{font-family:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;font-size:12px}
+.formula{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;overflow-x:auto;white-space:pre}
+button{background:var(--accent);color:#06121f;border:none;border-radius:7px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+button:hover{filter:brightness(1.08)}
+button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+button.danger{background:var(--panel2);color:var(--bad);border:1px solid var(--border)}
+/* sticky header: timers + tabs */
+.top{position:sticky;top:0;z-index:20;background:rgba(13,16,23,.97);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:10px;backdrop-filter:blur(6px)}
+.timers{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--dim);margin-bottom:8px}
+.timers b{color:var(--text);font-variant-numeric:tabular-nums}
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.mbtn{background:var(--panel2);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;color:var(--dim)}
+.mbtn.active{color:#06121f;background:var(--accent);border-color:var(--accent)}
+.mbtn .pc{font-weight:500;opacity:.8;margin-left:5px;font-size:11px}
+/* progress */
+.bar{height:6px;background:var(--panel2);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%;background:var(--accent);transition:width .2s}
+.bar i.full{background:var(--good)}
+/* checklist rows */
+.sec{margin-bottom:14px}
+.sec .panel{padding:4px 6px}
+.row{display:flex;align-items:flex-start;gap:10px;padding:8px 6px;border-bottom:1px solid var(--border)}
+.row:last-child{border-bottom:none}
+.row.done .t{color:var(--dim);text-decoration:line-through}
+.row.hid{opacity:.45}
+.cb{flex:0 0 auto;width:20px;height:20px;border:1.5px solid var(--border);border-radius:5px;background:var(--panel2);cursor:pointer;display:grid;place-items:center;font-size:13px;color:#06121f;margin-top:1px;user-select:none}
+.row.done .cb{background:var(--good);border-color:var(--good)}
+.body{flex:1 1 auto;min-width:0}
+.t{font-size:14px}
+.t .lv{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--high);border:1px solid rgba(255,184,107,.35);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:1px}
+.t .lv.pvp{color:var(--mid);border-color:rgba(199,140,255,.35)}
+.t .lv.grp{color:var(--low);border-color:rgba(106,212,255,.35)}
+.n{font-size:12px;color:var(--dim);margin-top:1px}
+.ctr{flex:0 0 auto;display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums}
+.ctr button{padding:2px 9px;font-size:15px;line-height:1.3;border-radius:5px;background:var(--panel2);color:var(--text);border:1px solid var(--border)}
+.ctr .v{min-width:44px;text-align:center;font-size:13px;font-weight:700}
+.x{flex:0 0 auto;color:var(--dim);cursor:pointer;font-size:14px;padding:0 4px;opacity:.5;user-select:none}
+.x:hover{opacity:1;color:var(--bad)}
+.addrow{display:flex;gap:6px;margin-top:6px}
+.addrow input{flex:1;background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:13px;font-family:inherit}
+.addrow input:focus{outline:1px solid var(--accent)}
+.hint{color:var(--dim);font-size:11px;margin-top:4px}
+/* settings */
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px 14px}
+.fld{display:flex;flex-direction:column;gap:2px}
+.fld label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.04em}
+.fld input,.fld select{background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 7px;font-size:13px;font-family:inherit;width:100%}
+.fld input:focus,.fld select:focus{outline:1px solid var(--accent)}
+.barrow{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
+textarea{width:100%;min-height:140px;background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:8px;font:13px/1.5 inherit;resize:vertical}
+details.method{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px 16px}
+details.method summary{cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:700;padding:8px 0}
+details.method p,details.method li{font-size:13px;color:var(--text)}
+details.method a{color:var(--accent)}
+.view{display:none}.view.active{display:block}
+@media (max-width:520px){.t{font-size:13px}.ctr .v{min-width:38px}}
+</style>
+</head><body>
+<div class='wrap'>
+  <h1>Aion 2 Week One</h1>
+  <div class='tag'>Day 1 route, first-week goals, and daily/weekly loops for the global launch. Everything saves in this browser; dailies and weeklies reset themselves.</div>
+
+  <div class='top'>
+    <div class='timers' id='timers'></div>
+    <div class='tabs' id='tabs'></div>
+  </div>
+
+  <div class='view' id='v_day1'></div>
+  <div class='view' id='v_week1'></div>
+  <div class='view' id='v_daily'></div>
+  <div class='view' id='v_weekly'></div>
+
+  <div class='view' id='v_settings'>
+    <h2>Reset clock</h2>
+    <div class='panel'>
+      <div class='ig'>
+        <div class='fld'><label>Daily reset hour (your local time)</label><input id='c_hour' type='number' min='0' max='23' step='1'></div>
+        <div class='fld'><label>Weekly reset day</label><select id='c_day'>
+          <option value='0'>Sunday</option><option value='1'>Monday</option><option value='2'>Tuesday</option><option value='3'>Wednesday</option><option value='4'>Thursday</option><option value='5'>Friday</option><option value='6'>Saturday</option></select></div>
+        <div class='fld'><label>Day 1 date</label><input id='c_start' type='date'></div>
+      </div>
+      <div class='hint'>Korea/Taiwan reset at 05:00 server time daily and Wednesday 05:00 weekly. The global reset clock was not published at time of writing. Set the hour to whatever the in-game panel says once you see it.</div>
+      <div class='barrow'><button onclick='saveCfg()'>Save</button><span id='cfgmsg' class='hint'></span></div>
+    </div>
+
+    <h2>Caps <span class='sub'>edit if the in-game panel disagrees</span></h2>
+    <div class='panel'><div class='ig' id='caps'></div>
+      <div class='barrow'><button onclick='saveCaps()'>Save caps</button><button class='ghost' onclick='resetCaps()'>Restore defaults</button></div>
+    </div>
+
+    <h2>Notes</h2>
+    <div class='panel'><textarea id='notes' placeholder='Server, faction, class, friends&#39; names, what to do next session…'></textarea>
+      <div class='hint'>Saves as you type.</div></div>
+
+    <h2>Backup</h2>
+    <div class='panel'>
+      <div class='barrow'>
+        <button class='ghost' onclick='exportState()'>Export JSON</button>
+        <button class='ghost' onclick='$("imp").click()'>Import JSON</button>
+        <input id='imp' type='file' accept='application/json' style='display:none' onchange='importState(this)'>
+        <button class='ghost' onclick='toggleShowHidden()' id='shbtn'>Show hidden items</button>
+        <button class='danger' onclick='wipe()'>Reset everything</button>
+      </div>
+      <div class='hint'>Storage is per browser. Export before switching PCs or clearing site data.</div>
+    </div>
+  </div>
+
+  <details class='method'>
+    <summary>Sources &amp; how resets work</summary>
+    <p><b>Resets.</b> The daily list clears the first time you open the page after the daily reset hour. The weekly list clears after the reset hour on the reset day. Both are computed in your browser's local time from the settings tab, so set the hour to match the in-game reset once the global clock is known. Nothing clears while you are mid-session.</p>
+    <div class='formula'>dailyPeriod  = most recent (today or yesterday) at resetHour:00
+weeklyPeriod = most recent resetDay at resetHour:00
+on load / each minute: if stored period != current period → clear that list</div>
+    <p><b>Launch schedule.</b> Advance Access for Founder's Pack buyers runs Sep 30 to Oct 4, 2026. Free launch is Mon Oct 5, 2026 at 06:00 PDT / 13:00 UTC on Steam and the PURPLE launcher. Korea and Taiwan reset at 05:00 server time (UTC+9 / UTC+8) daily and Wednesday weekly; global has not published its clock, so the first weekly reset here is presumed Wed Oct 7.</p>
+    <p><b>Counts.</b> Entry limits come from the KR/TW release and launch-week guides and may shift for global. Edit any cap in the settings tab. Sources disagree on Daily Dungeon (7 vs 14 per week); the higher one is the default.</p>
+    <p><b>Item level gates</b> quoted by guides: Expedition Exploration at 1600 (Vakron Sky Island) and 2200 (Ferocious Horn Den), Sanctuary at CP 2700.</p>
+    <ul>
+      <li><a href='https://mein-mmo.de/en/aion-2-daily-weekly-checklist-perfect-start,1589979/' target='_blank' rel='noopener'>mein-mmo: daily &amp; weekly checklist, first-week plan</a></li>
+      <li><a href='https://skycoach.gg/blog/aion-2/articles/checklist-guide' target='_blank' rel='noopener'>skycoach: checklist guide, resource regen table</a></li>
+      <li><a href='https://talentbuilds.com/aion2/checklist' target='_blank' rel='noopener'>talentbuilds: daily/weekly counts and rewards</a></li>
+      <li><a href='https://gamers4.life/aion-2/database/en/checklist/' target='_blank' rel='noopener'>gamers4.life: checklist database</a></li>
+      <li><a href='https://aion2t.com/guides/start-guide-global' target='_blank' rel='noopener'>aion2t: global start guide, five cap-level tracks</a></li>
+      <li><a href='https://xboosty.com/blog/aion-2/aion-2-beginners-guide-2026-what-to-do-at-launch-and-your-first-48-hours-15' target='_blank' rel='noopener'>xboosty: level unlock table, first 48 hours</a></li>
+      <li><a href='https://aion2pilot.com/first-day-guide' target='_blank' rel='noopener'>aion2pilot: first-day route</a></li>
+      <li><a href='https://aion2game.wiki/guide/beginner-guide/' target='_blank' rel='noopener'>aion2game.wiki: three decisions, mistakes</a></li>
+      <li><a href='https://www.aion2timers.com/daily-reset/' target='_blank' rel='noopener'>aion2timers: reset times</a> · <a href='https://mmos.com/news/release-dates/aion-2-global-launch' target='_blank' rel='noopener'>mmos: launch date</a></li>
+    </ul>
+  </details>
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const KEY='aion2w1.v1';
+
+// ---------- content ----------
+// item: {id, t (title), n (note), max (counter cap, optional), lv (badge text), k (badge kind: '', 'pvp', 'grp')}
+const LISTS={
+day1:{title:'Day 1',sections:[
+ {h:'Before you log in',items:[
+  {id:'d1_faction',t:'Pick faction, server and region with your friends',n:'Faction is account-level and hard to reverse. Server sets your economy and matchmaking; match your timezone.'},
+  {id:'d1_class',t:'Have two class choices ready',n:'Weapon binding means rerolling needs a fresh character, and deletion has about a one-week cooldown.'},
+  {id:'d1_alts',t:'Decide: solo main, or main + alts',n:'Entry limits are per character, so alts feed the main. But an alt only pays off if you log it daily. Casual = one main.'},
+  {id:'d1_client',t:'Client and drivers updated, disk headroom',n:'Founder’s Pack Advance Access opens Sep 30; free launch Oct 5, 06:00 PDT.'},
+ ]},
+ {h:'First hour',items:[
+  {id:'d1_settings',t:'Fix graphics, camera and keybinds',n:'Try both control modes (action vs classic) before you commit.'},
+  {id:'d1_skills',t:'Read every starting skill',n:'Note which ones are movement, defense, control, and resource skills. Practice one repeatable rotation.'},
+  {id:'d1_story',t:'Main story only',n:'Skip question marks, non-story campfires and puzzle rooms today. Story is what unlocks systems.'},
+  {id:'d1_nospend',t:'Spend nothing yet',n:'Don’t enhance transition gear or use scarce materials before you know what they are for.'},
+  {id:'d1_flight',t:'Learn flight',n:''},
+ ]},
+ {h:'Level milestones',items:[
+  {id:'d1_l10',t:'Tutorial done, main story begins',lv:'Lv 10',n:'About 10–15 minutes.'},
+  {id:'d1_l12',t:'Nezekan board unlocks',lv:'Lv 12',n:'First Daevanion board.'},
+  {id:'d1_l16',t:'First dungeon, run it solo',lv:'Lv 16–18',n:'Also a check that the class feels right.'},
+  {id:'d1_l20',t:'Zikel board unlocks',lv:'Lv 20',n:''},
+  {id:'d1_l22',t:'Odyle Energy starts regenerating',lv:'Lv 22',n:'The key threshold: 15 per 3 h, 120 a day, caps at 840. About one hour in.'},
+  {id:'d1_l30',t:'Vaizel board unlocks; gold gear starts dropping',lv:'Lv 30',n:'Gold drops sell well.'},
+  {id:'d1_l40',t:'Triniel board unlocks',lv:'Lv 40',n:''},
+  {id:'d1_l45',t:'Cap: Ariel and Azphel boards, Nightmare, Duty Quests',lv:'Lv 45',n:'Guides estimate 4–5 hours of story to get here.'},
+ ]},
+ {h:'Once you hit 45',items:[
+  {id:'d1_duty',t:'Do the 5 Duty Quests',n:'Server-wide, so one character covers them. Favor ones that give crystals for pets.'},
+  {id:'d1_towers',t:'Clear both Transcendence towers',n:'Card stat sets.'},
+  {id:'d1_stigma',t:'Farm Abyss Points, buy purchase contracts for stigmas',n:'Contracts yield more than raw farming. One coherent setup for your role.'},
+  {id:'d1_lock',t:'Lock your weapon and every accessory you care about',n:'One misclick in synthesis or extraction and it’s gone.'},
+  {id:'d1_pet',t:'Get pet auto-loot',n:'Guides quote 2–3M Kinah. Pays back fast.'},
+  {id:'d1_altlv',t:'Every alt to Lv 22',n:'So their Odyle Energy pools start filling. Skip if you chose solo main.'},
+ ]},
+ {h:'Before you log off',items:[
+  {id:'d1_inv',t:'Clear inventory',n:''},
+  {id:'d1_next',t:'Write down the next main objective',n:'Use the Notes box in Settings.'},
+  {id:'d1_panels',t:'Open every newly unlocked daily/weekly panel',n:'Check what shows a reset timer, then set the reset hour in Settings.'},
+ ]},
+ {h:'Don’t',items:[
+  {id:'d1_noreroll',t:'No rerolling because someone else is faster',n:''},
+  {id:'d1_nores',t:'No burning resurrection stones',n:'Limited and expensive.'},
+  {id:'d1_nomarket',t:'No speculative market buys; sort by unit price, not stack total',n:''},
+  {id:'d1_noalts',t:'No pile of alts',n:'Some content is a server-wide budget, not per character.'},
+ ]},
+]},
+week1:{title:'Week 1',sections:[
+ {h:'Characters',items:[
+  {id:'w1_45',t:'Main at cap (45/50) with every daily loop running',n:''},
+  {id:'w1_alts',t:'Alts at Lv 22 and logged daily',n:'Only if you chose alts.'},
+  {id:'w1_ilvl',t:'Main at item level 1,400',n:'Launch-week target from the KR/TW guides. Raise it when something you want is gated, not for the number.'},
+  {id:'w1_stig',t:'Stigma setup settled for your role',n:'Solo: damage + mobility + survival. Group DPS: boss uptime. Tank: control + durability. Healer: reliable heals first. PvP after PvE is stable.'},
+  {id:'w1_member',t:'Decide on membership',n:'Free accounts can’t use the Market or trade player-to-player. About $15/month.'},
+ ]},
+ {h:'Permanent power (do once, never resets)',items:[
+  {id:'w1_mini',t:'Clear every solo mini-dungeon, own territory and enemy zones',n:'Portals open on a schedule; miss the window and you wait. Easier at cap but they feed Daevanion boards, so don’t leave them.'},
+  {id:'w1_feather',t:'Collect feathers along the way',n:'Progression currency, not junk.'},
+  {id:'w1_quests',t:'Regional quests and every quest you walk past',n:''},
+  {id:'w1_sealed',t:'Sealed dungeons and strongholds',n:''},
+  {id:'w1_belt',t:'Belt upgrade',n:''},
+  {id:'w1_emp',t:'Empyrean questlines: Verteron/Altgard, Eltnen/Morheim, Abyss',n:''},
+ ]},
+ {h:'Five tracks to start at cap (all at once, not in order)',items:[
+  {id:'w1_daev',t:'A — Daevanion boards',n:'Fill them from dungeons, Shugo Festival and achievements. Spread points across boards; don’t dump everything into one.'},
+  {id:'w1_arcana',t:'B — Arcana card collection started',n:'Sets; each card levels to 5; needs the right bonus/skill rolls.'},
+  {id:'w1_pets',t:'C — Pets / Genus',n:'Daily Odylium Repository dungeon, open-world mobs, Genus Insight vouchers.'},
+  {id:'w1_gold',t:'D — Golden weapon obtained and upgrading',n:'From PvP gear, dungeon drops or crafting. Extra stat slot via philosopher’s stones.'},
+  {id:'w1_pantheon',t:'E — Pantheon paintings/statues started',n:'Slowest track, which is why it starts now. Nightmare, world bosses, dungeons, market.'},
+ ]},
+ {h:'Before the first weekly reset',items:[
+  {id:'w1_weeklies',t:'Every weekly cap hit (see Weekly tab)',n:'Presumed Wed Oct 7 for global. Do them early in the week, not the last night.'},
+  {id:'w1_odyle',t:'Odyle Energy spent below cap on every character',n:'840 cap; anything above it is lost regen.'},
+  {id:'w1_shop',t:'Weekly shop purchases and crafts done',n:''},
+  {id:'w1_pass',t:'Daeva Pass progressed on every character',n:''},
+  {id:'w1_season',t:'Seasonal missions kept up daily',n:''},
+ ]},
+]},
+daily:{title:'Daily',sections:[
+ {h:'Fixed per day',items:[
+  {id:'da_duty',t:'Duty Quests',max:5,lv:'Lv 45',n:'Server-wide: one character does them for the whole server. Abyss Points, Kina, enhance stones, Odyle, Hidden Cube keys.'},
+  {id:'da_night',t:'Nightmare',max:2,lv:'Lv 45',n:'Solo boss. 2 tickets a day, bank up to 14. Dream Fragments, Soul Codex, Daevanion crystals, wings, statues.'},
+  {id:'da_conq',t:'Expedition: Conquest',max:3,lv:'4-player',k:'grp',n:'Equipment.'},
+  {id:'da_trans',t:'Transcendence',max:2,lv:'2–4 player',k:'grp',n:'Arcana, Theostones, Amplify Stone fragments.'},
+  {id:'da_shugo',t:'Shugo Festival',max:2,lv:'Lv 13',n:'4–9 player minigames, runs every 15–30 min. 2 keys a day, bank up to 14.'},
+  {id:'da_rift',t:'Spacetime Rifts',max:6,lv:'PvP',k:'pvp',n:'Opposite-faction zone, opens every 4 h. Sealed dungeons, rift quests, Abyss Points.'},
+  {id:'da_inv',t:'Invasion key used',max:1,n:'1 key a day, bank up to 7.'},
+ ]},
+ {h:'Upkeep',items:[
+  {id:'da_odyle',t:'Odyle Energy spent, every character under 840',lv:'Lv 22',n:'120 regen a day, 40 per loot box.'},
+  {id:'da_repo',t:'Odylium Repository (pets / Genus)',n:''},
+  {id:'da_supply',t:'Emergency Supply Requests',n:'Deliver materials or gear parts for Abyss Points. Shared board, doubles as a market-trend read.'},
+  {id:'da_season',t:'Seasonal missions and Daeva Pass dailies',n:''},
+  {id:'da_circuit',t:'Zone circuit: Verteron/Altgard, Eltnen/Morheim',n:'Batch the Duty Quests into this loop.'},
+  {id:'da_lock',t:'New gear locked',n:''},
+ ]},
+]},
+weekly:{title:'Weekly',sections:[
+ {h:'Per character',items:[
+  {id:'wk_dd',t:'Daily Dungeon',max:14,n:'90-second wave runs, up to 10k enhance stones per entry. A missed day cannot be made up. Some guides say 7; edit the cap if your panel shows 7.'},
+  {id:'wk_asc',t:'Ascension Trial',max:3,n:'Solo. Selentium, Daevanion Crystal: Ariel fragments, manastones/soulstones. Alts repeat.'},
+  {id:'wk_raid',t:'Raid',max:3,lv:'4-player',k:'grp',n:'Amplify Stone (fragments), Daevanion Crystal: Ariel fragments, enhance stones.'},
+  {id:'wk_expl',t:'Expedition: Exploration',max:7,n:'Vakron Sky Island (ilvl 1600), Ferocious Horn Den (2200).'},
+  {id:'wk_bf',t:'Battlefield wins',max:3,lv:'PvP',k:'pvp',n:'Victory rewards, per character. Scheduled.'},
+  {id:'wk_abyss',t:'Abyss hours',max:7,lv:'PvP',k:'pvp',n:'PvP gear, stigma shards, Theostones, ranking.'},
+  {id:'wk_event',t:'Abyss events',max:2,lv:'PvP',k:'pvp',n:'Wed and Sat, presumed.'},
+  {id:'wk_sanct',t:'Sanctuary',max:2,lv:'10-player',k:'grp',n:'CP 2700+. Low priority in week one.'},
+  {id:'wk_morph',t:'Odyle Energy Morph',max:7,n:'Odyle recharge currency for cube rewards.'},
+  {id:'wk_ladra',t:'Ladra raid',max:2,lv:'10-player',k:'grp',n:''},
+ ]},
+ {h:'Per server (one character covers it)',items:[
+  {id:'wk_cmd',t:'Command Missions (PvE weekly quests)',max:12,n:'Command merchant. Purchase contracts, Abyss Points, Kina, enhance stones, gear.'},
+  {id:'wk_pvpq',t:'PvP weekly quests',max:20,lv:'PvP',k:'pvp',n:'Abyss merchant.'},
+ ]},
+ {h:'Before reset',items:[
+  {id:'wk_supply',t:'Weekly Supply Requests',n:'Seasonal delivery orders.'},
+  {id:'wk_shop',t:'Weekly shop limits bought, weekly crafts done',n:''},
+  {id:'wk_odyle',t:'Substance morph and subscriber shop Odyle spent',n:'20 on main + 4 per alt each.'},
+  {id:'wk_pass',t:'Daeva Pass weeklies',n:''},
+ ]},
+]},
+};
+const TABS=['day1','week1','daily','weekly','settings'];
+const TABNAME={day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
+const RESETS={daily:'daily',weekly:'weekly'};       // which lists auto-clear
+const DEF_CFG={resetHour:5,resetDay:3,startDate:'2026-09-30'};
+
+// ---------- state ----------
+let S=null, tab='day1', showHidden=false;
+function blank(){return {done:{},cnt:{},hidden:{},custom:{day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'day1'};}
+function load(){
+  try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}
+  catch(e){S=blank();}
+  S.cfg=Object.assign({...DEF_CFG},S.cfg||{});
+  for(const l of Object.keys(LISTS)) if(!S.custom[l]) S.custom[l]=[];
+  tab=TABS.includes(S.tab)?S.tab:'day1';
+}
+function save(){try{S.tab=tab;localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+
+// ---------- reset clock (pure) ----------
+function dailyPeriodStart(now,cfg){
+  const d=new Date(now);d.setHours(cfg.resetHour,0,0,0);
+  if(d>now)d.setDate(d.getDate()-1);
+  return d.getTime();
+}
+function weeklyPeriodStart(now,cfg){
+  const d=new Date(dailyPeriodStart(now,cfg));
+  let back=(d.getDay()-cfg.resetDay+7)%7;
+  d.setDate(d.getDate()-back);
+  return d.getTime();
+}
+function nextReset(start,days){const d=new Date(start);d.setDate(d.getDate()+days);return d.getTime();}
+function fmtDur(ms){
+  if(ms<0)ms=0;const m=Math.floor(ms/60000),h=Math.floor(m/60),d=Math.floor(h/24);
+  if(d>0)return `${d}d ${h%24}h`;return `${h}h ${String(m%60).padStart(2,'0')}m`;
+}
+function applyResets(){
+  const now=new Date();let changed=false;
+  const ds=dailyPeriodStart(now,S.cfg), ws=weeklyPeriodStart(now,S.cfg);
+  if(S.period.daily!==ds){if(S.period.daily!==undefined)clearList('daily');S.period.daily=ds;changed=true;}
+  if(S.period.weekly!==ws){if(S.period.weekly!==undefined)clearList('weekly');S.period.weekly=ws;changed=true;}
+  if(changed)save();
+  return changed;
+}
+function clearList(l){
+  for(const it of allItems(l)){delete S.done[it.id];delete S.cnt[it.id];}
+}
+
+// ---------- item helpers ----------
+function allItems(l){
+  const out=[];for(const s of LISTS[l].sections)for(const it of s.items)out.push(it);
+  for(const c of S.custom[l])out.push(c);
+  return out;
+}
+function cap(it){return it.max?(S.caps[it.id]||it.max):0;}
+function isDone(it){return it.max?((S.cnt[it.id]||0)>=cap(it)):!!S.done[it.id];}
+function progress(l){
+  let n=0,d=0;for(const it of allItems(l)){if(S.hidden[it.id])continue;n++;if(isDone(it))d++;}
+  return [d,n];
+}
+
+// ---------- actions ----------
+function toggle(id){S.done[id]=!S.done[id];if(!S.done[id])delete S.done[id];save();render();}
+function bump(id,dir,max){
+  const v=Math.max(0,Math.min(max,(S.cnt[id]||0)+dir));
+  if(v===0)delete S.cnt[id];else S.cnt[id]=v;save();render();
+}
+function hide(id){S.hidden[id]=!S.hidden[id];if(!S.hidden[id])delete S.hidden[id];save();render();}
+function addCustom(l){
+  const inp=$('add_'+l);const t=(inp.value||'').trim();if(!t)return;
+  const id='c_'+l+'_'+Date.now().toString(36);
+  S.custom[l].push({id,t,n:'',custom:true});inp.value='';save();render();
+}
+function delCustom(l,id){
+  S.custom[l]=S.custom[l].filter(c=>c.id!==id);delete S.done[id];delete S.cnt[id];delete S.hidden[id];save();render();
+}
+function setTab(t){tab=t;save();render();}
+function toggleShowHidden(){showHidden=!showHidden;$('shbtn').textContent=showHidden?'Hide hidden items':'Show hidden items';render();}
+
+// ---------- settings ----------
+function fillCfg(){
+  $('c_hour').value=S.cfg.resetHour;$('c_day').value=S.cfg.resetDay;$('c_start').value=S.cfg.startDate;
+  $('notes').value=S.notes||'';
+  let h='';
+  for(const l of ['daily','weekly'])for(const it of allItems(l))if(it.max)
+    h+=`<div class='fld'><label>${esc(it.t)} <span class='dim'>(${TABNAME[l]})</span></label><input type='number' min='1' step='1' id='cap_${it.id}' value='${cap(it)}'></div>`;
+  $('caps').innerHTML=h;
+}
+function saveCfg(){
+  S.cfg.resetHour=Math.max(0,Math.min(23,Math.round(+$('c_hour').value)||0));
+  S.cfg.resetDay=+$('c_day').value;
+  S.cfg.startDate=$('c_start').value||DEF_CFG.startDate;
+  // re-anchor periods to the new clock without clearing anything
+  const now=new Date();S.period.daily=dailyPeriodStart(now,S.cfg);S.period.weekly=weeklyPeriodStart(now,S.cfg);
+  save();$('cfgmsg').textContent='Saved.';setTimeout(()=>$('cfgmsg').textContent='',1500);renderTimers();
+}
+function saveCaps(){
+  for(const l of ['daily','weekly'])for(const it of allItems(l))if(it.max){
+    const v=Math.max(1,Math.round(+$('cap_'+it.id).value)||it.max);
+    if(v===it.max)delete S.caps[it.id];else S.caps[it.id]=v;
+  }
+  save();render();
+}
+function resetCaps(){S.caps={};save();render();}
+function exportState(){
+  const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='aion2-week1-'+new Date().toISOString().slice(0,10)+'.json';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+}
+function importState(inp){
+  const f=inp.files&&inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const o=JSON.parse(r.result);if(!o||typeof o!=='object'||!o.done)throw 0;S=Object.assign(blank(),o);S.cfg=Object.assign({...DEF_CFG},S.cfg||{});save();load();render();}
+    catch(e){alert('That file is not a checklist export.');}};
+  r.readAsText(f);inp.value='';
+}
+function wipe(){if(!confirm('Clear every check, counter, cap, note and setting?'))return;localStorage.removeItem(KEY);load();render();}
+
+// ---------- render ----------
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function rowHTML(l,it){
+  const done=isDone(it),hid=!!S.hidden[it.id];
+  if(hid&&!showHidden)return '';
+  const badge=it.lv?`<span class='lv ${it.k||''}'>${esc(it.lv)}</span>`:'';
+  let ctl;
+  if(it.max){
+    const v=S.cnt[it.id]||0,m=cap(it);
+    ctl=`<div class='ctr'><button onclick='bump("${it.id}",-1,${m})' aria-label='minus'>&minus;</button><span class='v'>${v}/${m}</span><button onclick='bump("${it.id}",1,${m})' aria-label='plus'>+</button></div>`;
+  }else ctl='';
+  const cb=it.max?`<div class='cb' onclick='bump("${it.id}",${done?-cap(it):cap(it)},${cap(it)})' title='${done?'Clear':'Mark all done'}'>${done?'&#10003;':''}</div>`
+                 :`<div class='cb' onclick='toggle("${it.id}")'>${done?'&#10003;':''}</div>`;
+  const x=it.custom?`<span class='x' title='Delete' onclick='delCustom("${l}","${it.id}")'>&#10005;</span>`
+                   :`<span class='x' title='${hid?'Unhide':'Hide (not relevant to me)'}' onclick='hide("${it.id}")'>${hid?'&#8634;':'&#10005;'}</span>`;
+  return `<div class='row${done?' done':''}${hid?' hid':''}'>${cb}<div class='body'><div class='t'>${badge}${esc(it.t)}</div>${it.n?`<div class='n'>${esc(it.n)}</div>`:''}</div>${ctl}${x}</div>`;
+}
+function renderList(l){
+  const L=LISTS[l];const [d,n]=progress(l);
+  let h=`<div class='bar'><i class='${d===n&&n?'full':''}' style='width:${n?100*d/n:0}%'></i></div><div class='hint'>${d} of ${n} done${resetNote(l)}</div>`;
+  for(const s of L.sections){
+    const rows=s.items.map(it=>rowHTML(l,it)).join('');if(!rows)continue;
+    h+=`<div class='sec'><h2>${esc(s.h)}</h2><div class='panel'>${rows}</div></div>`;
+  }
+  const cr=S.custom[l].map(it=>rowHTML(l,it)).join('');
+  h+=`<div class='sec'><h2>Your own</h2><div class='panel'>${cr||"<div class='hint' style='padding:6px'>Nothing added yet.</div>"}</div>`+
+     `<div class='addrow'><input id='add_${l}' placeholder='Add an item to ${TABNAME[l]}' onkeydown='if(event.key==="Enter")addCustom("${l}")'><button onclick='addCustom("${l}")'>Add</button></div></div>`;
+  $('v_'+l).innerHTML=h;
+}
+function resetNote(l){
+  if(l==='daily')return ` · clears at ${String(S.cfg.resetHour).padStart(2,'0')}:00 local`;
+  if(l==='weekly')return ` · clears ${['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][S.cfg.resetDay]} ${String(S.cfg.resetHour).padStart(2,'0')}:00 local`;
+  return '';
+}
+function renderTabs(){
+  $('tabs').innerHTML=TABS.map(t=>{
+    let pc='';if(LISTS[t]){const [d,n]=progress(t);pc=`<span class='pc'>${d}/${n}</span>`;}
+    return `<button class='mbtn${t===tab?' active':''}' onclick='setTab("${t}")'>${TABNAME[t]}${pc}</button>`;}).join('');
+  for(const t of TABS)$('v_'+t).classList.toggle('active',t===tab);
+}
+function renderTimers(){
+  const now=new Date();
+  const ds=dailyPeriodStart(now,S.cfg),ws=weeklyPeriodStart(now,S.cfg);
+  const dn=nextReset(ds,1),wn=nextReset(ws,7);
+  const start=new Date(S.cfg.startDate+'T00:00:00');
+  const dayN=Math.floor((now-start)/86400000)+1;
+  const launch=new Date('2026-10-05T13:00:00Z');
+  let h=`<span>Day <b>${dayN>0?dayN:'–'}</b> since ${esc(S.cfg.startDate)}</span>`+
+        `<span>Daily reset in <b>${fmtDur(dn-now)}</b></span>`+
+        `<span>Weekly reset in <b>${fmtDur(wn-now)}</b></span>`;
+  if(now<launch)h+=`<span>Free launch in <b>${fmtDur(launch-now)}</b></span>`;
+  $('timers').innerHTML=h;
+}
+function render(){
+  for(const l of Object.keys(LISTS))renderList(l);
+  renderTabs();renderTimers();fillCfg();
+}
+
+// ---------- boot ----------
+window.onload=function(){
+  load();applyResets();render();
+  $('notes').addEventListener('input',e=>{S.notes=e.target.value;save();});
+  setInterval(()=>{if(applyResets())render();else renderTimers();},60000);
+};
+</script>
+</body></html>
