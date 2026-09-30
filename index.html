@@ -140,7 +140,7 @@ details.method p,details.method li{font-size:13px;color:var(--text)}
         <tr><td><b>Cleric</b></td><td>Healer</td><td>Mace</td><td>Melee/close</td><td>Simple to play, hard to play well. Highest group demand. Lowest damage. Can resurrect.</td></tr>
         <tr><td><b>Chanter</b></td><td>Melee support</td><td>Staff</td><td>Melee</td><td>Hits things and buffs the party. Flexible and self-sufficient, master of none.</td></tr>
       </table>
-      <div class='callout'>Never played an MMO? <b>Ranger</b> is the safe pick. Want to be wanted in groups from day one? <b>Templar</b> or <b>Cleric</b>, but know that tanking and healing mean the group looks at you when things go wrong. Want to solo comfortably? <b>Gladiator</b> or <b>Spiritmaster</b>.</div>
+      <div class='callout'>Never played an MMO? <b>Ranger</b> is the safe pick, and it has its own tab on this site. Want to be wanted in groups from day one? <b>Templar</b> or <b>Cleric</b>, but know that tanking and healing mean the group looks at you when things go wrong. Want to solo comfortably? <b>Gladiator</b> or <b>Spiritmaster</b>.</div>
       <h3>Then: one character, or alts?</h3>
       <p>Most limits (dungeon entries, Odyle Energy, Nightmare tickets) are <i>per character</i>, so extra characters ("alts") can farm the same content again and feed materials to your main. A few things (Duty Quests, weekly quest counts) are <i>per server</i>, so alts add nothing there. Alts are only worth it if you log into them every day. If you play one or two hours a night, one main is the right answer.</p>
     </div>
@@ -285,6 +285,151 @@ details.method p,details.method li{font-size:13px;color:var(--text)}
     </dl></div>
   </div>
 
+  <!-- ================= RANGER ================= -->
+  <div class='view sh' id='v_ranger'>
+
+    <h2>How the Ranger plays</h2>
+    <div class='panel'>
+      <p>Bow, physical ranged damage, about <b>20 metres</b> of reach. You win by standing where the enemy is not: keep your distance, slow or root what comes at you, and dodge the telegraphed hits. You are squishy (survivability is the class's weak stat), so spacing is your armor. Dodging costs stamina; use it for the dangerous swings, not for every attack.</p>
+      <p>Your damage has one idea behind it: <b>Marking Shot</b> puts a "Precision" state on you, <b>Deadshot</b> hits far harder while Precision is up, and <b>Gale Arrow</b> speeds you up so you fit more shots in. Most everything else is filler, buffs, or a condition (slowed, staggered) that turns a weak skill into a strong one. Rangers scale with <b>critical hit</b>; that is the stat the whole build pulls toward.</p>
+      <div class='callout good'>Leveling summary from the guides: "kite backwards forever, zero gear needed." Ranger is one of the three fastest levelers and the most forgiving first character.</div>
+    </div>
+
+    <h2>Skills cheat sheet <span class='sub'>names as the global client shows them; older guides use Korean-translated names in brackets</span></h2>
+    <div class='panel'>
+      <table>
+        <tr><th>Skill</th><th>What it does</th><th>How to use it</th></tr>
+        <tr><td><b>Snipe</b></td><td>Basic attack. Restores 120 MP, and each hit shortens Deadshot's cooldown.</td><td>Hold it down as your filler. Level it to 16+.</td></tr>
+        <tr><td><b>Marking Shot</b> [Mark of the Hunter]</td><td>Gives you Precision: +300 Critical Hit, +5% Perfect Chance, for about 15 s.</td><td>Recast every 15 s by hand. Never let Deadshot fire without it.</td></tr>
+        <tr><td><b>Gale Arrow</b> [Wind Shot]</td><td>Gale buff: +7% Combat Speed, +7% PvE damage, 10 s.</td><td>Cast whenever it is off cooldown. It is what keeps the rotation fast.</td></tr>
+        <tr><td><b>Deadshot</b> [Aiming Shot]</td><td>Charged shot, your biggest hit. Ignores block and evasion. +35% while Precision is up.</td><td>Charge it by hand when it is ready and you will not have to move mid-charge.</td></tr>
+        <tr><td><b>Drill Dart</b> [Piercing Arrow]</td><td>Fires on a critical hit and applies a bleed. A major damage source.</td><td>In the macro. Green specialization gives 3% HP drain if you need sustain.</td></tr>
+        <tr><td><b>Tempest Shot</b></td><td>Damage buff with critical bonuses.</td><td>In the macro. Level 16.</td></tr>
+        <tr><td><b>Snare Shot</b></td><td>Slows the target. Enables Burst Arrow and Explosive Arrow.</td><td>Recast about every 5 s. Level 12 is enough.</td></tr>
+        <tr><td><b>Burst Arrow</b> [Arrow Barrage]</td><td>Hard hit, but only on a slowed or rooted target.</td><td>After Snare Shot. Level 12 is enough.</td></tr>
+        <tr><td><b>Arrow Scattershot</b></td><td>Hits harder than Snipe, but only on a staggered target.</td><td>During stagger windows on bosses.</td></tr>
+        <tr><td><b>Suppressing Arrow</b></td><td>40% stun chance while Precision is active.</td><td>Interrupts. Manual.</td></tr>
+        <tr><td><b>Defiance</b></td><td>Removes debuffs, 5 s immunity to status effects.</td><td>Your panic button. Never in a macro.</td></tr>
+        <tr><td><b>Traps</b> (Ensnaring, Explosion)</td><td>Ground control: airborne, damage.</td><td>Explosion Trap goes off at <i>your</i> feet, not the target's. Manual only.</td></tr>
+      </table>
+      <h3>Passives</h3>
+      <div class='kv'>
+        <b>Focused Eye</b><span>Accuracy, PvE damage boost (about 1% per level), Double Chance. Mandatory, max it.</span>
+        <b>Hunter's Resolve</b><span>Big Critical Damage boost. Mandatory, max it.</span>
+        <b>Hunter's Soul</b><span>Extra damage on crits, boosted further by Vaizel's Authority. Next.</span>
+        <b>Concentrated Fire</b><span>50% chance of an extra hit on bleeding/DoT targets. Next.</span>
+        <b>Wind Vigor</b><span>Stamina and movement speed on hit. Quality of life.</span>
+        <b>Vigilant Eye</b><span>Evasion, max HP, heal on dodge. Take it if you keep dying.</span>
+      </div>
+    </div>
+
+    <h2>Rotation</h2>
+    <div class='panel'>
+      <p><b>Opener</b> (before the fight starts): Vaizel's Authority, Bow of Blessing, Supporting Fire, then Gale Arrow, then Marking Shot. Now you are buffed and have Precision.</p>
+      <p><b>Loop:</b></p>
+      <ol>
+        <li>Hold <b>Snipe</b> as your basic attack the whole time.</li>
+        <li>Hold the in-game <b>macro key</b>; it fires the skills below as they come off cooldown.</li>
+        <li>Charge <b>Deadshot</b> by hand every time it is ready and Precision is up.</li>
+        <li>Recast <b>Marking Shot</b> by hand every 15 s.</li>
+        <li>Recast <b>Snare Shot</b> every ~5 s so Burst and Explosive Arrow keep hitting.</li>
+      </ol>
+      <p>Turn on the <b>Skill Queue</b> option in settings so held keys chain cleanly. Then build the game's own macro with a 10 ms delay:</p>
+      <div class='formula'>Line 1:  Gale Arrow → Griffon Arrow → Snare Shot → Explosive Arrow
+Line 2:  Drill Dart → Burst Arrow → Tempest Shot
+Line 3:  Vaizel's Authority → Supporting Fire → Bow of Blessing</div>
+      <div class='callout bad'>Keep these <b>out</b> of the macro and on your own fingers: Deadshot (the charge gets interrupted), Marking Shot, Defiance, traps, movement, and any boss-specific cooldown. The three most common Ranger mistakes are charging Deadshot without Precision, charging it right before a forced move, and treating Burst Arrow or Scattershot as unconditional filler.</div>
+    </div>
+
+    <h2>Skill points: what to level first</h2>
+    <div class='panel'>
+      <p>Skills gain extra effects at levels <b>8, 12 and 16</b> ("specializations"), and level 8 and 12 are the ones that change how a skill feels. Actives normally cap at 10; Daevanion boards push them past that.</p>
+      <ol>
+        <li><b>Deadshot, Gale Arrow, Drill Dart</b> to 8, then to 12. These three are the build.</li>
+        <li><b>Focused Eye and Hunter's Resolve</b> as high as you can. Guides want the two of them above 67 combined levels before you touch anything optional.</li>
+        <li><b>Snipe</b> to 16. <b>Tempest Shot</b> to 16.</li>
+        <li><b>Snare Shot and Burst Arrow</b> to 12 and stop.</li>
+        <li>Everything else last.</li>
+      </ol>
+    </div>
+
+    <h2>Stigmas <span class='sub'>unlock around level 22 to 23 after the Ascension quest</span></h2>
+    <div class='panel'>
+      <p>You get a handful of slots (four at KR launch, later six) and shards are scarce, so this is the order:</p>
+      <table>
+        <tr><th>Stigma</th><th>What it does</th><th>Verdict</th></tr>
+        <tr><td><b>Vaizel's Authority</b> [Vayel's Blessing]</td><td>+Attack (about 20%), +Perfect Chance, +Weapon Damage Boost for its duration. At stigma level 20, crits have a 50% chance to shave 1 s off cooldowns.</td><td class='good'>Mandatory. The number-one stigma. Upgrade it first.</td></tr>
+        <tr><td><b>Supporting Fire</b> [Concentrated Fire]</td><td>Summons a damage sphere for 30 s that shoots alongside you.</td><td class='good'>Mandatory. Upgrade second.</td></tr>
+        <tr><td><b>Bow of Blessing</b></td><td>+200 Critical Hit, +100 Accuracy, and converts crit into a big damage buff.</td><td class='good'>Mandatory. Upgrade third.</td></tr>
+        <tr><td><b>Explosive Arrow</b></td><td>Large single hit on a slowed or rooted target.</td><td>Best 4th slot for bosses.</td></tr>
+        <tr><td><b>Griffon Arrow</b></td><td>Burn damage over time; strong opener.</td><td>Great 4th or 5th slot, especially for solo and AoE.</td></tr>
+        <tr><td><b>Illusory Arrow</b></td><td>Strong damage, two charges at level 20.</td><td>Alternative 4th; cast by hand.</td></tr>
+        <tr><td><b>Arrow Storm</b></td><td>Area stun.</td><td>Take for packs, PvP and solo.</td></tr>
+        <tr><td><b>Mother Nature's Breath</b> [Hand of Great Nature]</td><td>Defensive.</td><td>Take it while you learn dungeons if you keep dying.</td></tr>
+        <tr><td><b>Ambush Kick</b></td><td>Teleport behind the target and kick away for distance.</td><td>PvP repositioning.</td></tr>
+        <tr><td><b>Stealth</b></td><td>10 s invisibility out of combat.</td><td>Utility only.</td></tr>
+      </table>
+      <div class='callout'>Week-one loadout: Vaizel's Authority, Supporting Fire, Bow of Blessing, Explosive Arrow. Swap Explosive for Mother Nature's Breath the first time you run a dungeon you don't know. Put every shard into Vaizel's Authority until it feels silly, then Supporting Fire.</div>
+    </div>
+
+    <h2>Daevanion boards for a Ranger</h2>
+    <div class='panel'>
+      <p>Node colors: <b>gray</b> small flat stats, <b>orange/gold</b> big percentage stats, <b>green</b> passive skill levels, <b>blue</b> active skill levels. Points come from side quests and sealed dungeons (do them), plus a one-time 50-crystal buy in the Shugo shop.</p>
+      <ol>
+        <li>Take every <b>gold node</b> on each board first.</li>
+        <li><b>Blue nodes</b> for Deadshot, Gale Arrow and Drill Dart, up to +4 each across the four skill boards.</li>
+        <li><b>Green nodes</b> for Focused Eye and Hunter's Resolve, +4 each.</li>
+        <li>Then the remaining actives and passives.</li>
+      </ol>
+      <div class='kv'>
+        <b>Nezekan (Lv 12)</b><span>Combat Speed and cooldown reduction.</span>
+        <b>Zikel (Lv 20)</b><span>Damage Boost.</span>
+        <b>Vaizel (Lv 30)</b><span>Critical Damage. Ranger is a crit class; this is your best board.</span>
+        <b>Triniel (Lv 40)</b><span>Multi-hit.</span>
+        <b>Ariel (Lv 45)</b><span>PvE stat board, fed by the weekly Ascension Trial. Prioritize it over Azphel (PvP).</span>
+      </div>
+      <p class='hint'>Route around nodes that do nothing in PvE: Multi-hit Resist, Critical Damage Tolerance, and the general HP > main stat (Might) > secondary rule applies when two paths cost the same.</p>
+    </div>
+
+    <h2>Stats and gear</h2>
+    <div class='panel'>
+      <h3>Stat priority</h3>
+      <div class='kv'>
+        <b>While leveling</b><span>Combat (attack) Speed, then Accuracy, then Critical Hit. Speed means more shots; accuracy means they land on higher-level mobs.</span>
+        <b>At cap, PvE</b><span>Accuracy up to what the content needs, then Critical Hit, then Attack / Might, then Damage Boost, then Critical Damage. Don't stack accuracy past the requirement.</span>
+        <b>Benchmarks</b><span>Season-1 raid guides quote about 1,500 Accuracy and 1,600 Critical Hit with group buffs and food. Combat Speed target 88.1% with Gale Arrow up; below that you drop a shot every cycle.</span>
+        <b>Divine stats</b><span>Destruction [Zikel] for Attack, Wisdom [Lumiel] for Double Chance, Time [Siel] for Combat Speed (usually one line on the bracelet), Illusion [Kaisinel] for cooldowns.</span>
+      </div>
+      <h3>Gear</h3>
+      <ul>
+        <li><b>Bow first, always.</b> Weapon damage multiplies every skill. Then the Revelation Amulet and Noble Belt (never replaced), then armor only as much as content demands.</li>
+        <li><b>Leveling gear:</b> the campaign hands you a 7-piece rare set around level 15 to 25; +5 it and stop. Fire Temple (level 15) drops a PvE bow worth taking to +10. Don't spend stones before level 15 gear.</li>
+        <li><b>Soul binding wishlist:</b> bow: Combat Speed, Damage Boost, Weapon Damage Boost, Multi-hit Chance, Might. Armor: Focused Eye and Hunter's Resolve levels. Rings: +levels on Deadshot, Gale Arrow, Drill Dart. Necklace: Combat Speed and Might.</li>
+        <li><b>Manastones</b> (only into gear you keep): Damage Boost, Weapon Damage Boost, Critical Damage Boost.</li>
+        <li><b>Theostone:</b> the "1% chance for a big single hit" kind. The 20% small-proc kind is weaker.</li>
+        <li><b>Endgame path (KR):</b> Nuakum armor from Ferocious Horn Den, Enraged Kromede accessories, then the Shining variants, then the crafted Splendent Ebony Dragon Lord set.</li>
+      </ul>
+    </div>
+
+    <h2>Leveling 1 to 45 as a Ranger</h2>
+    <div class='panel'>
+      <p>A first character takes about 20 to 25 hours at a careful pace; the launch-day guides' "4 to 5 hours" is for people who already know the route and skip everything. Plan for somewhere between.</p>
+      <table>
+        <tr><th>Levels</th><th>Do</th><th>Skip</th></tr>
+        <tr><td><b>1–10</b></td><td>Tutorial. Learn Snipe, Marking Shot, dodge. Take the Teleport Scroll quest at 10.</td><td>Everything optional.</td></tr>
+        <tr><td><b>10–15</b></td><td>Main story only. Kite: shoot, walk backwards, shoot. Nothing needs to reach you.</td><td>Repeatable "kill 10" quests. Enhancing starter gear.</td></tr>
+        <tr><td><b>15–25</b></td><td>Fire Temple at 15 (PvE bow). Join a Legion at 16 for the 30% XP buff. Equip the campaign rare set, +5 it. Stigma quest around 22–23: get Vaizel's Authority. Level 22: Odyle starts.</td><td>Opening Exploration reward cubes (bank the Odyle).</td></tr>
+        <tr><td><b>25–35</b></td><td>Daevanion boards are open: gold nodes, then Deadshot/Gale/Drill Dart. Daily dungeons are the best XP from 29 to 35. Vaizel board at 30.</td><td>Backtracking for side quests you passed; do the ones in the zone you're in.</td></tr>
+        <tr><td><b>35–45</b></td><td>Krao Cave and Draupnir every reset. Hall of Illusion weekly from 41. Save Abyss Points for stigma contracts. Bank recovery potions for 45.</td><td>Spending AP on anything but contracts.</td></tr>
+        <tr><td><b>45</b></td><td>Belt and amulet from the campaign. Switch to the Daily tab. Both Transcendence towers. Buy contracts.</td><td></td></tr>
+      </table>
+      <p class='hint'>Optional trick from the KR guides: pause XP just under 25 so the level-25 campaign chapter unlocks the moment you ding, instead of sitting on a gate.</p>
+    </div>
+
+    <h2>Ranger setup checklist</h2>
+    <div id='l_ranger'></div>
+  </div>
+
   <div class='view' id='v_day1'></div>
   <div class='view' id='v_week1'></div>
   <div class='view' id='v_daily'></div>
@@ -345,6 +490,7 @@ on load / each minute: if stored period != current period → clear that list</d
       <li><a href='https://space4games.com/en/games-en/aion-2-classes-guide/' target='_blank' rel='noopener'>space4games: class guide</a> · <a href='https://timesaver.gg/blog/aion-2-beginner-guide' target='_blank' rel='noopener'>timesaver: beginner guide, membership gate</a></li>
       <li><a href='https://kodex.yavuz.app/en/glossary/' target='_blank' rel='noopener'>Aion 2 Kodex glossary</a> · <a href='https://aion2guide.org/dungeons/aion-2-dungeon-entry-and-odyle-energy/' target='_blank' rel='noopener'>aion2guide: Odyle Energy</a> · <a href='https://aion2guide.org/systems/aion-2-gear-progression-guide/' target='_blank' rel='noopener'>aion2guide: gear progression</a> · <a href='https://aion2guide.org/systems/aion-2-stigma-guide/' target='_blank' rel='noopener'>aion2guide: stigmas</a></li>
       <li><a href='https://www.sportskeeda.com/mmo/elyos-vs-asmodian-which-aion-2-faction-choose' target='_blank' rel='noopener'>sportskeeda: Elyos vs Asmodian</a> · <a href='https://overgear.com/guides/aion-2/all-you-need-to-know/' target='_blank' rel='noopener'>overgear: all you need to know</a></li>
+      <li>Ranger: <a href='https://guidemmo.com/guide-ranger-aion-2-en/' target='_blank' rel='noopener'>guidemmo PvE build</a> · <a href='https://game8.co/games/Aion-2/archives/613085' target='_blank' rel='noopener'>game8 class guide</a> · <a href='https://expcarry.com/aion-2-ranger-guide' target='_blank' rel='noopener'>expcarry</a> · <a href='https://www.mmoexp.com/News/aion-2-ranger-class-guide-skills-stats-gear-and-builds.html' target='_blank' rel='noopener'>mmoexp</a> · <a href='https://aionbuilds.com/en/guides/leveling-1-45' target='_blank' rel='noopener'>aionbuilds leveling 1–45</a> · <a href='https://aionbuilds.com/en/guides/stigma-daevanion-guide' target='_blank' rel='noopener'>aionbuilds stigma &amp; Daevanion</a> · <a href='https://blazingboost.com/aion-2-boost/aion-2-daevanion-guide' target='_blank' rel='noopener'>blazingboost Daevanion</a> · <a href='https://cogm.app/aion2/leveling' target='_blank' rel='noopener'>cogm leveling</a></li>
       <li><a href='https://www.aion2timers.com/daily-reset/' target='_blank' rel='noopener'>aion2timers: reset times</a> · <a href='https://mmos.com/news/release-dates/aion-2-global-launch' target='_blank' rel='noopener'>mmos: launch date</a></li>
     </ul>
   </details>
@@ -476,14 +622,51 @@ weekly:{title:'Weekly',sections:[
   {id:'wk_pass',t:'Daeva Pass weeklies',n:''},
  ]},
 ]},
+ranger:{title:'Ranger',sections:[
+ {h:'Settings and controls',items:[
+  {id:'rg_queue',t:'Skill Queue option turned on',n:'Lets held keys chain skills without gaps.'},
+  {id:'rg_macro',t:'In-game macro built (3 lines, 10 ms delay)',n:'Gale Arrow, Griffon Arrow, Snare Shot, Explosive Arrow / Drill Dart, Burst Arrow, Tempest Shot / Vaizel’s Authority, Supporting Fire, Bow of Blessing.'},
+  {id:'rg_manual',t:'Deadshot, Marking Shot, Defiance and traps on their own keys',n:'Never in the macro.'},
+  {id:'rg_dodge',t:'Dodge key comfortable, stamina bar visible',n:''},
+ ]},
+ {h:'Skills',items:[
+  {id:'rg_core8',t:'Deadshot, Gale Arrow, Drill Dart at level 8',n:'First specialization tier.'},
+  {id:'rg_core12',t:'Deadshot, Gale Arrow, Drill Dart at level 12',n:''},
+  {id:'rg_pass',t:'Focused Eye + Hunter’s Resolve leveled before optional skills',n:'Target: the two above 67 combined.'},
+  {id:'rg_snipe',t:'Snipe at 16, Tempest Shot at 16',n:''},
+  {id:'rg_snare',t:'Snare Shot and Burst Arrow at 12',n:'Then stop.'},
+ ]},
+ {h:'Stigmas',items:[
+  {id:'rg_stig_q',t:'Ascension / stigma quest done (Lv 22–23)',n:''},
+  {id:'rg_va',t:'Vaizel’s Authority equipped',n:'The number-one stigma. Shards go here first.'},
+  {id:'rg_sf',t:'Supporting Fire equipped',n:'Second for shards.'},
+  {id:'rg_bob',t:'Bow of Blessing equipped',n:'Third for shards.'},
+  {id:'rg_4th',t:'4th slot chosen (Explosive Arrow for bosses / Mother Nature’s Breath while learning)',n:''},
+  {id:'rg_contracts',t:'Abyss Points spent on purchase contracts, not gear',n:'Until the three core stigmas are in.'},
+ ]},
+ {h:'Daevanion',items:[
+  {id:'rg_gold',t:'All gold nodes on every open board',n:''},
+  {id:'rg_blue',t:'Blue nodes: Deadshot, Gale Arrow, Drill Dart',n:''},
+  {id:'rg_green',t:'Green nodes: Focused Eye, Hunter’s Resolve',n:''},
+  {id:'rg_ariel',t:'Ariel board started from Ascension Trial points',n:'Lv 45.'},
+ ]},
+ {h:'Gear',items:[
+  {id:'rg_bow',t:'Bow enhanced first',n:'Fire Temple PvE bow to +10 while leveling; the real bow at 45.'},
+  {id:'rg_set5',t:'Campaign rare set at +5, no further',n:''},
+  {id:'rg_amulet',t:'Revelation Amulet and Noble Belt enhanced before armor',n:'Never replaced.'},
+  {id:'rg_acc',t:'Accuracy meets the content, then Crit Hit',n:'Raid guides: ~1,500 Accuracy, ~1,600 Crit with buffs.'},
+  {id:'rg_speed',t:'Combat Speed 88.1% with Gale Arrow up',n:'Usually one Time [Siel] line on the bracelet.'},
+  {id:'rg_stones',t:'No manastones or theostones in gear you will replace',n:''},
+ ]},
+]},
 };
-const TABS=['start','day1','week1','daily','weekly','settings'];
-const TABNAME={start:'Start here',day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
+const TABS=['start','ranger','day1','week1','daily','weekly','settings'];
+const TABNAME={start:'Start here',ranger:'Ranger',day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
 const DEF_CFG={resetHour:5,resetDay:3,startDate:'2026-09-30'};
 
 // ---------- state ----------
 let S=null, tab='start', showHidden=false;
-function blank(){return {done:{},cnt:{},hidden:{},custom:{day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'start'};}
+function blank(){return {done:{},cnt:{},hidden:{},custom:{ranger:[],day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'start'};}
 function load(){
   try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}
   catch(e){S=blank();}
@@ -620,7 +803,7 @@ function renderList(l){
   const cr=S.custom[l].map(it=>rowHTML(l,it)).join('');
   h+=`<div class='sec'><h2>Your own</h2><div class='panel'>${cr||"<div class='hint' style='padding:6px'>Nothing added yet.</div>"}</div>`+
      `<div class='addrow'><input id='add_${l}' placeholder='Add an item to ${TABNAME[l]}' onkeydown='if(event.key==="Enter")addCustom("${l}")'><button onclick='addCustom("${l}")'>Add</button></div></div>`;
-  $('v_'+l).innerHTML=h;
+  ($('l_'+l)||$('v_'+l)).innerHTML=h;
 }
 function resetNote(l){
   if(l==='daily')return ` · clears at ${String(S.cfg.resetHour).padStart(2,'0')}:00 local`;
