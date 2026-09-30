@@ -755,7 +755,8 @@ function rgPlan(L){
   const have=RG_SKILLS.filter(s=>s.lv<=L&&(s.t!=='s'||own[s.n]));
   const isNew=s=>s.lv===L&&s.t!=='s';
   const macro=have.filter(s=>s.use==='macro').sort((a,b)=>a.ord-b.ord);
-  const stigmas=have.filter(s=>s.t==='s'&&s.pri).sort((a,b)=>a.pri-b.pri).slice(0,RG_STIGMA_SLOTS);
+  const slots=Math.max(0,Math.min(6,(S&&S.rgSlots!=null)?S.rgSlots:RG_STIGMA_SLOTS));
+  const stigmas=have.filter(s=>s.t==='s'&&s.pri).sort((a,b)=>a.pri-b.pri).slice(0,slots);
   const stigNames=new Set(stigmas.map(s=>s.n));
   const buyNext=L>=22?RG_SKILLS.filter(s=>s.t==='s'&&s.pri&&!own[s.n]).sort((a,b)=>a.pri-b.pri):[];
   const macroEq=macro.filter(s=>s.t!=='s'||stigNames.has(s.n));
@@ -766,9 +767,10 @@ function rgPlan(L){
   const nextList=next.filter(s=>s.lv===nextLv);
   const boards=RG_BOARDS.filter(b=>b.lv<=L);
   const nextBoard=RG_BOARDS.find(b=>b.lv>L);
-  return {L,have,isNew,macro:macroEq,stigmas,manual,passives,nextLv,nextList,boards,nextBoard,buyNext};
+  return {L,have,isNew,macro:macroEq,stigmas,slots,manual,passives,nextLv,nextList,boards,nextBoard,buyNext};
 }
 function toggleOwn(n){S.rgOwn=rgOwned();S.rgOwn[n]=!S.rgOwn[n];if(!S.rgOwn[n])delete S.rgOwn[n];save();renderRangerPlan();}
+function setSlots(v){S.rgSlots=Math.max(0,Math.min(6,Math.round(+v)||0));save();renderRangerPlan();}
 function rgPoints(L){
   const o=[];
   if(L<14){o.push('Snipe first (it is most of your damage until Deadshot), then Gale Arrow, then Drill Dart, each toward level 8.');}
@@ -808,7 +810,8 @@ function renderRangerPlan(){
   if(L===22)h+=`<div class='callout'><b>Stigmas unlock now.</b> Do the Ascension quest, then buy purchase contracts with Abyss Points at the Abyss merchant. Tick each one below as you get it and the macro and loadout update.</div>`;
   if(L>=22){
     const own=rgOwned();
-    h+=`<h3>Stigmas you own <span class='dim' style='font-weight:400;font-size:12px'>tick what you have</span></h3><div class='ownrow'>`;
+    h+=`<h3>Stigmas you own <span class='dim' style='font-weight:400;font-size:12px'>tick what you have</span></h3>`;
+    h+=`<p style='margin:0 0 6px'><label class='own on' style='cursor:default'>Slots open on my screen <input type='number' min='0' max='6' value='${p.slots}' style='width:46px;background:var(--panel);color:var(--text);border:1px solid var(--border);border-radius:4px;padding:2px 4px' onchange='setSlots(this.value)'></label> <span class='hint'>Slots open one at a time as you level; hover a locked slot in game to see its level.</span></p><div class='ownrow'>`;
     RG_SKILLS.filter(s=>s.t==='s').sort((a,b)=>(a.pri||99)-(b.pri||99)).forEach(s=>{
       h+=`<label class='own${own[s.n]?' on':''}'><input type='checkbox' ${own[s.n]?'checked':''} onchange='toggleOwn(${JSON.stringify(s.n)})'> ${esc(s.n)}${s.pri?`<span class='dim'> #${s.pri}</span>`:''}</label>`;});
     h+=`</div>`;
@@ -833,7 +836,11 @@ function renderRangerPlan(){
   // rotation
   h+=`<h3>Rotation</h3><ol>${rgRotation(p).map(x=>`<li>${x}</li>`).join('')}</ol>`;
   // stigmas
-  if(L>=22){h+=`<h3>Stigma loadout</h3>`+(p.stigmas.length?`<ol>${p.stigmas.map(s=>`<li><b>${esc(s.n)}</b> <span class='dim'>${esc(s.d)}</span></li>`).join('')}</ol><p class='hint'>Shard order is the list order. Equip them all; put each in a free hotbar slot.</p>`:`<p class='dim'>None owned yet. Tick them above as you buy them.</p>`);}
+  if(L>=22){
+    const own=rgOwned();const bench=RG_SKILLS.filter(s=>s.t==='s'&&s.pri&&own[s.n]&&!p.stigmas.some(x=>x.n===s.n)).sort((a,b)=>a.pri-b.pri);
+    h+=`<h3>Stigma loadout <span class='dim' style='font-weight:400;font-size:12px'>${p.slots} slot${p.slots===1?'':'s'}</span></h3>`+(p.stigmas.length?`<ol>${p.stigmas.map(s=>`<li><b>${esc(s.n)}</b> <span class='dim'>${esc(s.d)}</span></li>`).join('')}</ol><p class='hint'>Shard order is the list order. Put each equipped one in a free hotbar slot.</p>`:`<p class='dim'>${p.slots?'None owned yet. Tick them above as you buy them.':'No slots open yet.'}</p>`);
+    if(bench.length)h+=`<p class='hint'>Owned, waiting for a slot: ${bench.map(s=>esc(s.n)).join(', ')}. Next slot that opens goes to <b>${esc(bench[0].n)}</b>.</p>`;
+  }
   // points
   h+=`<h3>Where points go</h3><ul>${rgPoints(L).map(x=>`<li>${x}</li>`).join('')}</ul>`;
   // passives + boards
