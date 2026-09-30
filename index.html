@@ -3,7 +3,7 @@
 <meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>Aion 2 Week One</title>
-<meta name='description' content='Day 1, week 1, and daily/weekly checklists for the Aion 2 global launch. Progress saves in your browser and dailies/weeklies reset themselves.'>
+<meta name='description' content='A from-zero guide plus Day 1, week 1, and daily/weekly checklists for the Aion 2 global launch. Progress saves in your browser and dailies/weeklies reset themselves.'>
 <style>
 :root{
   --bg:#0d1017;--panel:#161a24;--panel2:#1b2030;--border:#2a3142;--text:#e7e9ee;
@@ -18,7 +18,11 @@ h1{font-size:25px;margin:0 0 4px;letter-spacing:-.02em}
 .tag{color:var(--dim);font-size:13px;margin-bottom:14px}
 h2{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin:22px 0 8px;font-weight:700;display:flex;justify-content:space-between;align-items:baseline;gap:10px}
 h2 .sub{color:var(--dim);letter-spacing:0;text-transform:none;font-weight:500;font-size:12px}
+h3{font-size:14px;margin:14px 0 4px;color:var(--text)}
 .panel{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.panel p{margin:6px 0}
+.panel ul,.panel ol{margin:6px 0;padding-left:20px}
+.panel li{margin:3px 0}
 .good{color:var(--good)}.bad{color:var(--bad)}.accent{color:var(--accent)}.dim{color:var(--dim)}
 code,.mono{font-family:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;font-size:12px}
 .formula{background:var(--panel2);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-family:"SF Mono",Menlo,monospace;font-size:12.5px;overflow-x:auto;white-space:pre}
@@ -26,6 +30,7 @@ button{background:var(--accent);color:#06121f;border:none;border-radius:7px;padd
 button:hover{filter:brightness(1.08)}
 button.ghost{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
 button.danger{background:var(--panel2);color:var(--bad);border:1px solid var(--border)}
+a{color:var(--accent)}
 /* sticky header: timers + tabs */
 .top{position:sticky;top:0;z-index:20;background:rgba(13,16,23,.97);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:10px;backdrop-filter:blur(6px)}
 .timers{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--dim);margin-bottom:8px}
@@ -49,9 +54,9 @@ button.danger{background:var(--panel2);color:var(--bad);border:1px solid var(--b
 .row.done .cb{background:var(--good);border-color:var(--good)}
 .body{flex:1 1 auto;min-width:0}
 .t{font-size:14px}
-.t .lv{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--high);border:1px solid rgba(255,184,107,.35);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:1px}
-.t .lv.pvp{color:var(--mid);border-color:rgba(199,140,255,.35)}
-.t .lv.grp{color:var(--low);border-color:rgba(106,212,255,.35)}
+.lv{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--high);border:1px solid rgba(255,184,107,.35);border-radius:4px;padding:0 5px;margin-right:6px;vertical-align:1px}
+.lv.pvp{color:var(--mid);border-color:rgba(199,140,255,.35)}
+.lv.grp{color:var(--low);border-color:rgba(106,212,255,.35)}
 .n{font-size:12px;color:var(--dim);margin-top:1px}
 .ctr{flex:0 0 auto;display:flex;align-items:center;gap:4px;font-variant-numeric:tabular-nums}
 .ctr button{padding:2px 9px;font-size:15px;line-height:1.3;border-radius:5px;background:var(--panel2);color:var(--text);border:1px solid var(--border)}
@@ -62,6 +67,25 @@ button.danger{background:var(--panel2);color:var(--bad);border:1px solid var(--b
 .addrow input{flex:1;background:var(--panel2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:6px 8px;font-size:13px;font-family:inherit}
 .addrow input:focus{outline:1px solid var(--accent)}
 .hint{color:var(--dim);font-size:11px;margin-top:4px}
+/* start-here content */
+.sh p{margin:6px 0}
+.sh .panel+.panel{margin-top:10px}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;font-size:13px}
+.kv b{color:var(--accent);font-weight:600;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
+th{color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+tr:last-child td{border-bottom:none}
+.gl dt{color:var(--accent);font-weight:600;margin-top:8px}
+.gl dd{margin:0;color:var(--text);font-size:13px}
+.callout{border-left:3px solid var(--high);background:var(--panel2);padding:8px 12px;border-radius:0 8px 8px 0;margin:8px 0;font-size:13px}
+.callout.good{border-color:var(--good);color:var(--text)}
+.callout.bad{border-color:var(--bad);color:var(--text)}
+details.sys{border:1px solid var(--border);border-radius:8px;background:var(--panel);margin:6px 0;padding:0 12px}
+details.sys summary{cursor:pointer;padding:9px 0;font-weight:600;font-size:14px}
+details.sys summary .why{color:var(--dim);font-weight:400;font-size:12px;margin-left:6px}
+details.sys .in{padding:0 0 10px;font-size:13px}
+details.sys .in p{margin:5px 0}
 /* settings */
 .ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px 14px}
 .fld{display:flex;flex-direction:column;gap:2px}
@@ -73,18 +97,192 @@ textarea{width:100%;min-height:140px;background:var(--panel2);color:var(--text);
 details.method{margin-top:26px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:6px 16px}
 details.method summary{cursor:pointer;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:700;padding:8px 0}
 details.method p,details.method li{font-size:13px;color:var(--text)}
-details.method a{color:var(--accent)}
 .view{display:none}.view.active{display:block}
-@media (max-width:520px){.t{font-size:13px}.ctr .v{min-width:38px}}
+@media (max-width:520px){.t{font-size:13px}.ctr .v{min-width:38px}.kv{grid-template-columns:1fr}.kv b{margin-top:6px}}
 </style>
 </head><body>
 <div class='wrap'>
   <h1>Aion 2 Week One</h1>
-  <div class='tag'>Day 1 route, first-week goals, and daily/weekly loops for the global launch. Everything saves in this browser; dailies and weeklies reset themselves.</div>
+  <div class='tag'>A from-zero guide, a Day 1 route, first-week goals, and daily/weekly loops for the global launch. Everything saves in this browser; dailies and weeklies reset themselves.</div>
 
   <div class='top'>
     <div class='timers' id='timers'></div>
     <div class='tabs' id='tabs'></div>
+  </div>
+
+  <!-- ================= START HERE ================= -->
+  <div class='view sh' id='v_start'>
+
+    <h2>What this is</h2>
+    <div class='panel'>
+      <p><b>Aion 2</b> is a free-to-play PC MMORPG from NCSoft, a new game rather than a sequel to the 2008 Aion. Korea and Taiwan have had it since November 2025. The global version (NA, SA, EU, Japan) opens Monday <b>October 5, 2026 at 06:00 PDT</b>, and Founder's Pack buyers get in from September 30. It runs on Steam or NCSoft's PURPLE launcher.</p>
+      <p>You make a winged character, pick one of two factions and one of eight classes, level through a story to the cap (45 at launch, later 50), then progress by running dungeons, upgrading gear, and filling several permanent power systems. There is open-world PvP between the two factions in a shared zone called the Abyss.</p>
+      <p><b>How to use this site.</b> Read this tab once. Then work down the <b>Day 1</b> tab on your first day and the <b>Week 1</b> tab across the week. From the moment you hit level 45, the <b>Daily</b> and <b>Weekly</b> tabs are your routine: tap <b>+</b> as you finish runs, tick boxes for the rest. They wipe themselves at reset. Anything that does not apply to you, hit the <b>&#10005;</b> to hide it. Add your own rows at the bottom of each list.</p>
+    </div>
+
+    <h2>Three decisions before you log in <span class='sub'>none of them are easy to undo</span></h2>
+    <div class='panel'>
+      <h3>1. Faction: Elyos or Asmodian</h3>
+      <p>Two sides of a war. They play identically: same classes, same skills, same stats. What differs is looks (Elyos are bright and angelic with light wings; Asmodians are dark and fierce with dark wings), the starting zones and the first thirty levels of story, and who you fight in PvP. It is set per account and hard to change.</p>
+      <div class='callout good'>If friends already picked a side, pick that side. That matters more than anything else. Otherwise choose on looks. Elyos tends to be a little more populated.</div>
+      <h3>2. Server</h3>
+      <p>Your server is your economy and your matchmaking pool. Pick the region that matches your timezone, and the same server as your friends. You cannot play with people on other servers.</p>
+      <h3>3. Class</h3>
+      <p>Your class is your weapon and your role, and it is locked to the character. There is no class change. Deleting a character has about a one-week cooldown, so pick with some care but do not agonize: leveling to 45 takes an evening.</p>
+      <table>
+        <tr><th>Class</th><th>Role</th><th>Weapon</th><th>Range</th><th>New-player feel</th></tr>
+        <tr><td><b>Templar</b></td><td>Tank</td><td>Sword + shield</td><td>Melee</td><td>Easy to survive with. Always wanted in groups, so fast queues. Slow kills solo. You are responsible for holding the boss.</td></tr>
+        <tr><td><b>Gladiator</b></td><td>Melee damage, off-tank</td><td>Greatsword</td><td>Melee</td><td>Sturdy bruiser with self-healing. Good solo. Needs some combo practice to shine.</td></tr>
+        <tr><td><b>Assassin</b></td><td>Burst melee damage</td><td>Dual daggers</td><td>Melee</td><td>Huge burst, very mobile, fragile. Feels great when it works, punishes mistakes.</td></tr>
+        <tr><td><b>Ranger</b></td><td>Physical ranged damage</td><td>Bow</td><td>Ranged</td><td>Simple combos, keeps its distance, forgiving. Weak up close. The most common "first character" pick.</td></tr>
+        <tr><td><b>Sorcerer</b></td><td>Magic ranged damage</td><td>Spellbook</td><td>Ranged</td><td>Big area damage and crowd control. Squishy, so positioning matters.</td></tr>
+        <tr><td><b>Spiritmaster</b></td><td>Summoner, ranged damage</td><td>Orb</td><td>Ranged</td><td>Pet does the frontline work; you curse and drain. Strong solo, the most to manage.</td></tr>
+        <tr><td><b>Cleric</b></td><td>Healer</td><td>Mace</td><td>Melee/close</td><td>Simple to play, hard to play well. Highest group demand. Lowest damage. Can resurrect.</td></tr>
+        <tr><td><b>Chanter</b></td><td>Melee support</td><td>Staff</td><td>Melee</td><td>Hits things and buffs the party. Flexible and self-sufficient, master of none.</td></tr>
+      </table>
+      <div class='callout'>Never played an MMO? <b>Ranger</b> is the safe pick. Want to be wanted in groups from day one? <b>Templar</b> or <b>Cleric</b>, but know that tanking and healing mean the group looks at you when things go wrong. Want to solo comfortably? <b>Gladiator</b> or <b>Spiritmaster</b>.</div>
+      <h3>Then: one character, or alts?</h3>
+      <p>Most limits (dungeon entries, Odyle Energy, Nightmare tickets) are <i>per character</i>, so extra characters ("alts") can farm the same content again and feed materials to your main. A few things (Duty Quests, weekly quest counts) are <i>per server</i>, so alts add nothing there. Alts are only worth it if you log into them every day. If you play one or two hours a night, one main is the right answer.</p>
+    </div>
+
+    <h2>What your first day looks like</h2>
+    <div class='panel'>
+      <ol>
+        <li><b>Settings first.</b> The game has two control modes: an action mode where you aim with the camera, and a classic tab-target mode like the old Aion. Try both in the first fight. Set graphics so the frame rate is steady, and look at the keybinds.</li>
+        <li><b>Tutorial to level 10</b> takes ten to fifteen minutes. Then the main story opens.</li>
+        <li><b>Follow the main story</b> (the gold quest marker) and ignore side content today. The story is what unlocks every system, and it is the fastest levels you will ever get. You will be able to fly early on: flight has a power meter; wind paths and updrafts move you faster for less power.</li>
+        <li><b>Around level 16 to 18 the first dungeon opens.</b> Run it solo once. It is a check that your class feels right and a first look at group mechanics.</li>
+        <li><b>Level 22 is the first milestone that matters:</b> Odyle Energy starts generating (see below). That is about an hour in. If you plan to use alts, every alt should reach 22 as soon as you can spare the time.</li>
+        <li><b>Level 45 is the cap.</b> Guides estimate four to five hours of story. Everything on the Daily tab unlocks around here.</li>
+      </ol>
+      <div class='callout bad'>Spend nothing on your first day. Do not enhance gear, do not socket stones, do not buy anything on the market. Everything you wear before 45 gets replaced, and the currencies you would spend are the scarce ones later.</div>
+    </div>
+
+    <h2>The systems, in plain words <span class='sub'>tap one to open it</span></h2>
+    <details class='sys' open><summary>Level, gear, item level and Combat Power <span class='why'>the numbers that gate content</span></summary><div class='in'>
+      <p><b>Level</b> is your character level, capped at 45 at launch. It comes from the story and unlocks systems.</p>
+      <p><b>Item level</b> (also called Gear Score) is the average strength of what you have equipped. Dungeons and raids require a minimum item level to enter. The first week's guides aim for about 1,400; harder content later wants 1,600, 2,200 and beyond. Raise it when something you want to do is locked, not for the number itself.</p>
+      <p><b>Combat Power (CP)</b> is a single number that estimates your total strength across gear, skills, stigmas, Daevanion boards, Arcana, and so on. It is the game's rough summary of how far along you are. Some content (Sanctuary) gates on CP instead of item level.</p>
+    </div></details>
+
+    <details class='sys'><summary>Enhancement and the stone slots <span class='why'>how gear gets stronger, and what is wasted</span></summary><div class='in'>
+      <p>Each piece of gear has an <b>enhancement level</b> (+1 up to +20 in Korea). Raising it costs Kinah plus <b>Enhancement Stones</b>, which are the scarcest early resource. Enhancement is your main upgrade track and it raises item level directly.</p>
+      <p>On top of that, gear has sockets: <b>Manastones</b> give a flat stat, <b>Theostones</b> go in weapons and add a chance-on-hit effect, and <b>Soul Binding</b> is a second stat block you can build up or reroll.</p>
+      <p><b>The rule that decides all your spending:</b> when you move to a better piece of gear, enhancement level and Soul Binding <i>carry over</i>. Manastones, Theostones and "potential" <i>do not</i>. So enhancing temporary gear is fine when you need it to clear content, but socketing stones into gear you will replace is money thrown away.</p>
+      <p>Two slots never get replaced and should be upgraded first: the <b>Revelation Amulet</b> (upgraded with feathers) and the <b>Noble Belt</b> (upgraded through strongholds). They also "morph" from Rare to Epic to Unique once fully enhanced. After those, enhance your weapon when kills are too slow, and everything else only just enough.</p>
+      <div class='callout'>Lock every item you care about the moment you get it (right-click, Lock). One misclick in the extraction or synthesis window destroys it.</div>
+    </div></details>
+
+    <details class='sys'><summary>Odyle Energy <span class='why'>the resource that caps how much you can do per day</span></summary><div class='in'>
+      <p>Most dungeons do not use entry tickets. You can walk in and clear them freely. The catch is at the end: the last boss drops a <b>reward Cube</b>, and opening it costs about <b>40 Odyle Energy</b>. No energy, no loot.</p>
+      <p>Odyle Energy starts generating at <b>level 22</b>, at 15 every 3 hours, so 120 a day. It is <b>per character</b> and it has a cap: about 560 for free accounts, 840 with membership. Once you hit the cap, regen is wasted, so spend it down every day.</p>
+      <p>Which content uses it: Expedition: Conquest, Transcendence, and raids at 45+. While leveling, guides advise clearing the Exploration expeditions the story sends you to but <i>not</i> opening their cubes, so you arrive at 45 with a full pool for the dungeons that matter. There is also a weekly "unclaimed cube" counter: repeatedly clearing without opening the cube runs it down, and at zero you cannot enter more expeditions that week.</p>
+    </div></details>
+
+    <details class='sys'><summary>Stigmas <span class='why'>your build-defining extra skills</span></summary><div class='in'>
+      <p>Stigmas are advanced skills you equip from a pool into a limited number of slots (four in Korea originally, later six). They are upgraded with <b>Stigma Shards</b>, not normal skill points. Shards come from Transcendence dungeons, Supply Requests, Command contracts, Shugo minigames, and the Abyss Points shop.</p>
+      <p>Because shards are scarce, you upgrade a few stigmas that fit your role, not all of them. Keep one PvE setup in week one. Pick the stigma that fixes your job in groups (healing for a Cleric, threat for a Templar, sustained damage for DPS). Resets were free in Korea, so trying things early is safe.</p>
+      <p>The fastest way to a first set: farm Abyss Points and buy <b>purchase contracts</b> from the Abyss merchant. Guides say this yields more than farming drops.</p>
+    </div></details>
+
+    <details class='sys'><summary>Daevanion boards <span class='why'>permanent passive power, six boards</span></summary><div class='in'>
+      <p>Six boards named after lore figures (Nezekan at level 12, Zikel at 20, Vaizel at 30, Triniel at 40, Ariel and Azphel at 45). Each is a grid of nodes: flat stats, PvE bonuses, PvP bonuses, and extra levels on named skills that push them past the normal cap.</p>
+      <p>You unlock nodes with <b>Daevanion Points</b> (from regional quests and rifts) and <b>Daevanion Crystals</b> (from dungeons, sealed dungeons, Shugo Festival, Nightmare, achievements). Spread investment across boards rather than dumping everything into one; the early nodes on each board are the cheapest power you will ever buy.</p>
+    </div></details>
+
+    <details class='sys'><summary>Arcana cards, pets, Pantheon <span class='why'>the slow long-term tracks</span></summary><div class='in'>
+      <p><b>Arcana</b> is a card collection with five equip slots. Cards come in sets and rarities, each levels to 5, and they add Combat Power. They drop mainly from Transcendence. Start collecting in week one but do not sweat it.</p>
+      <p><b>Pets</b> loot for you and help you travel. Pet auto-loot is the first real quality-of-life purchase (guides quote two to three million Kinah). The pet/"Genus" system levels through the daily Odylium Repository dungeon and open-world farming.</p>
+      <p><b>Pantheon</b> is statues, paintings and colossi that grant passive stats. It is the slowest system in the game, fed by Nightmare, world bosses, dungeons and the market, which is exactly why you start it early.</p>
+    </div></details>
+
+    <details class='sys'><summary>The Abyss and PvP <span class='why'>where the two factions meet</span></summary><div class='in'>
+      <p>The <b>Abyss</b> is a shared zone where both factions fight over <b>artifacts</b>; holding one opens a five-minute <b>Abyss Corridor</b> instance for your side. Playing there earns <b>Abyss Points (AP)</b>, the currency for PvP gear, accessories, weapons, and the stigma contracts above. You also earn AP from <b>Supply Requests</b> (delivering materials) and from <b>Spacetime Rifts</b>, the red portals in the open world that briefly lead into enemy territory.</p>
+      <p>Your <b>Abyss Rank</b> is a faction leaderboard with military-style tiers that carry buffs. <b>Battlefield</b> is scheduled instanced PvP with weekly win rewards. The <b>Arena</b> has 1v1 and 4v4 ladders. None of this is required in week one, but a few Rifts and Battlefield wins are cheap AP.</p>
+    </div></details>
+
+    <details class='sys'><summary>Shugo Festival, Nightmare, Duty Quests <span class='why'>the short daily things</span></summary><div class='in'>
+      <p><b>Shugo Festival</b> (level 13) is a set of 4-to-9-player minigames that run every 15 to 30 minutes. You get 2 keys a day, and they stack up to 14, so you can skip days and catch up. Rewards include Daevanion crystals, gear, pets and decor.</p>
+      <p><b>Nightmare</b> (level 45) is a solo boss fight. 2 tickets a day, stacking to 14. It is the main source of the central Pantheon statue, wings, and Daevanion crystals.</p>
+      <p><b>Duty Quests</b> (level 45) are five short daily quests, usually "kill a few of X" in the open world. They are counted <i>per server</i>, so one character does them for your whole roster. Prefer ones that reward pet crystals.</p>
+    </div></details>
+
+    <details class='sys'><summary>Money and membership <span class='why'>Kinah, Quna, and the $15 question</span></summary><div class='in'>
+      <div class='kv'>
+        <b>Kinah</b><span>The normal currency, shared across your characters. From quests, dungeons, selling drops. Spent on enhancement, crafting, vendors.</span>
+        <b>Quna</b><span>The real-money currency. Can be exchanged for Kinah on the market.</span>
+        <b>Abyss Points</b><span>PvP/Abyss currency. Gear, accessories, stigma contracts.</span>
+        <b>Medals of Merit</b><span>The Abyss shop's second currency (silver, gold, platinum) with weekly buy caps.</span>
+        <b>Enhancement Stones</b><span>Consumed to enhance gear. The scarcest early resource.</span>
+        <b>Daevanion Points / Crystals</b><span>Spent on the Daevanion boards.</span>
+        <b>Feathers</b><span>Collected in the capital. Feed the Monolith (skill points) and the Revelation Amulet.</span>
+      </div>
+      <div class='callout' style='margin-top:10px'>Free accounts <b>cannot use the Market</b> (the auction house) or the Quna-to-Kinah exchange, and there is no direct player trading. That is locked behind the optional membership, about $15 a month. Decide in week one whether you want to buy and sell at all. Never buy Kinah from third parties; accounts get banned for it.</div>
+    </div></details>
+
+    <details class='sys'><summary>Quests, zones, legions <span class='why'>the shape of the world</span></summary><div class='in'>
+      <p><b>Main story</b> unlocks regions and systems and is the fastest leveling. <b>Regional quests</b> are optional per-zone tasks that reward gear and permanent upgrades (including <b>Class Runes</b>, which give large item-level bonuses when upgraded). <b>Sealed dungeons</b> are the question marks on the map: small solo dungeons that drop Daevanion crystals, enhancement stones and <b>Cube keys</b>. <b>Strongholds</b> progress your belt.</p>
+      <p>Elyos level through Poeta, Verteron and Eltnen; Asmodians through Ishalgen, Altgard and Morheim. You cannot enter the other side's starter zones except briefly through rifts.</p>
+      <p>A <b>Legion</b> is a guild. Join one early. Most 4-player and 10-player content is far easier with a group that talks.</p>
+    </div></details>
+
+    <h2>Mistakes new players make</h2>
+    <div class='panel'>
+      <ul>
+        <li><b>Trusting old Aion guides.</b> This is a different game with different systems.</li>
+        <li><b>Enhancing or socketing gear you will replace.</b> Stones do not transfer. Amulet and belt first.</li>
+        <li><b>Spending Odyle Energy on low-level cubes.</b> Bank it for 45.</li>
+        <li><b>Splitting stigma shards across several builds.</b> One PvE setup first.</li>
+        <li><b>Rerolling because someone else is faster.</b> Deletion has a cooldown and you lose a day.</li>
+        <li><b>A pile of alts you never log into.</b> They only pay off if played daily.</li>
+        <li><b>Buying on the market by stack price instead of unit price.</b></li>
+        <li><b>Burning resurrection stones</b> on trash deaths. They are limited and expensive.</li>
+        <li><b>Ignoring the dodge.</b> Bosses telegraph; learn one defensive skill per class before group content.</li>
+        <li><b>Sitting at the Odyle cap.</b> Regen above the cap is lost.</li>
+      </ul>
+    </div>
+
+    <h2>Glossary</h2>
+    <div class='panel'><dl class='gl'>
+      <dt>Abyss</dt><dd>The shared PvPvE zone between the factions. Also the name of the weekly "hours in the zone" cap.</dd>
+      <dt>Abyss Corridor</dt><dd>Five-minute instance opened by holding the matching artifact. Richest AP source.</dd>
+      <dt>Abyss Points (AP)</dt><dd>PvP/Abyss currency for gear and stigma contracts.</dd>
+      <dt>Arcana</dt><dd>Five-slot card collection that adds Combat Power. From Transcendence.</dd>
+      <dt>Ascension Trial (Ascension Test)</dt><dd>Solo weekly dungeon, 3 runs per character. Manastones, soulstones, Daevanion fragments.</dd>
+      <dt>Battlefield</dt><dd>Scheduled instanced PvP. 3 win rewards per character per week.</dd>
+      <dt>Belt (Noble Belt)</dt><dd>Never-replaced gear slot, progressed through strongholds.</dd>
+      <dt>Command Missions</dt><dd>The 12 weekly PvE quests from the Command merchant. Per server.</dd>
+      <dt>CP (Combat Power)</dt><dd>One number summarizing total character strength.</dd>
+      <dt>Cube</dt><dd>Two meanings: the reward chest at the end of a dungeon (opened with Odyle Energy), and hidden world chests opened with Cube keys from sealed dungeons.</dd>
+      <dt>Daeva Pass</dt><dd>The season pass with daily and weekly missions. Progress it on every character.</dd>
+      <dt>Daevanion boards</dt><dd>Six permanent passive-stat boards unlocked with points and crystals.</dd>
+      <dt>Daily Dungeon</dt><dd>90-second solo wave run, up to 14 entries a week, big enhancement-stone payout. Missed days are lost.</dd>
+      <dt>Duty Quests</dt><dd>5 short daily quests, per server, from level 45.</dd>
+      <dt>Expedition: Conquest / Exploration</dt><dd>Conquest is the 4-player daily dungeon (3 a day). Exploration is the weekly 7-entry dungeon with item-level gates (Vakron Sky Island 1600, Ferocious Horn Den 2200).</dd>
+      <dt>Feather</dt><dd>Collectible in the capital city; feeds the Monolith and Revelation Amulet.</dd>
+      <dt>Gear Score / item level</dt><dd>Average strength of equipped gear. Gates dungeon entry.</dd>
+      <dt>Kinah</dt><dd>Standard currency.</dd>
+      <dt>Legion</dt><dd>Guild.</dd>
+      <dt>Manastone / Theostone</dt><dd>Socketed stat stone / socketed weapon proc stone. Neither transfers to new gear.</dd>
+      <dt>Monolith</dt><dd>Permanent skill-point system fed by feathers.</dd>
+      <dt>Morph</dt><dd>Converting a fully enhanced item to the next rarity.</dd>
+      <dt>Nightmare</dt><dd>Solo boss, 2 tickets a day (stack to 14), level 45.</dd>
+      <dt>Odyle Energy</dt><dd>Per-character resource (15 per 3 h, 120 a day) spent to open dungeon reward cubes.</dd>
+      <dt>Ordeal</dt><dd>Expedition tab that reruns an instance at adjustable difficulty; resets weekly.</dd>
+      <dt>Pantheon</dt><dd>Statues, paintings and colossi granting passive stats. Slowest system.</dd>
+      <dt>Quna</dt><dd>Real-money currency.</dd>
+      <dt>Raid</dt><dd>4-player weekly, 3 runs. Ladra is the 10-player one, 2 runs.</dd>
+      <dt>Revelation Amulet</dt><dd>Never-replaced accessory upgraded with feathers. Weapon damage and defense percentages.</dd>
+      <dt>Sanctuary</dt><dd>10-player boss content, 2 a week, needs about CP 2700. Not a week-one thing.</dd>
+      <dt>Sealed dungeon</dt><dd>Question-mark mini dungeons. Daevanion crystals, enhancement stones, Cube keys.</dd>
+      <dt>Shugo Festival</dt><dd>Minigames every 15 to 30 minutes. 2 keys a day, stack to 14.</dd>
+      <dt>Soul Binding</dt><dd>Second stat block on gear. Transfers to new gear.</dd>
+      <dt>Spacetime Rift</dt><dd>Red portal into enemy territory, opens on a schedule (every 4 h). PvP, rift quests, AP.</dd>
+      <dt>Stigma / Stigma Shard</dt><dd>Equippable advanced skill / the upgrade material for it.</dd>
+      <dt>Supply Requests</dt><dd>Delivery orders (materials or gear parts) for AP. Emergency ones are daily, weekly ones are seasonal.</dd>
+      <dt>Transcendence</dt><dd>Timed, graded 2-to-4-player dungeon, 2 a day. Arcana cards and Theostones. Two "towers" to clear at 45.</dd>
+      <dt>Transfer crafting</dt><dd>Crafting the next tier of gear while carrying enhancement and Soul Binding over.</dd>
+    </dl></div>
   </div>
 
   <div class='view' id='v_day1'></div>
@@ -134,8 +332,7 @@ details.method a{color:var(--accent)}
 weeklyPeriod = most recent resetDay at resetHour:00
 on load / each minute: if stored period != current period → clear that list</div>
     <p><b>Launch schedule.</b> Advance Access for Founder's Pack buyers runs Sep 30 to Oct 4, 2026. Free launch is Mon Oct 5, 2026 at 06:00 PDT / 13:00 UTC on Steam and the PURPLE launcher. Korea and Taiwan reset at 05:00 server time (UTC+9 / UTC+8) daily and Wednesday weekly; global has not published its clock, so the first weekly reset here is presumed Wed Oct 7.</p>
-    <p><b>Counts.</b> Entry limits come from the KR/TW release and launch-week guides and may shift for global. Edit any cap in the settings tab. Sources disagree on Daily Dungeon (7 vs 14 per week); the higher one is the default.</p>
-    <p><b>Item level gates</b> quoted by guides: Expedition Exploration at 1600 (Vakron Sky Island) and 2200 (Ferocious Horn Den), Sanctuary at CP 2700.</p>
+    <p><b>Counts and numbers</b> come from the Korea/Taiwan release and launch-week guides and may shift for global. Enhancement costs and rates for global are unpublished. Edit any cap in the settings tab. Sources disagree on Daily Dungeon (7 vs 14 per week); the higher one is the default.</p>
     <ul>
       <li><a href='https://mein-mmo.de/en/aion-2-daily-weekly-checklist-perfect-start,1589979/' target='_blank' rel='noopener'>mein-mmo: daily &amp; weekly checklist, first-week plan</a></li>
       <li><a href='https://skycoach.gg/blog/aion-2/articles/checklist-guide' target='_blank' rel='noopener'>skycoach: checklist guide, resource regen table</a></li>
@@ -145,6 +342,9 @@ on load / each minute: if stored period != current period → clear that list</d
       <li><a href='https://xboosty.com/blog/aion-2/aion-2-beginners-guide-2026-what-to-do-at-launch-and-your-first-48-hours-15' target='_blank' rel='noopener'>xboosty: level unlock table, first 48 hours</a></li>
       <li><a href='https://aion2pilot.com/first-day-guide' target='_blank' rel='noopener'>aion2pilot: first-day route</a></li>
       <li><a href='https://aion2game.wiki/guide/beginner-guide/' target='_blank' rel='noopener'>aion2game.wiki: three decisions, mistakes</a></li>
+      <li><a href='https://space4games.com/en/games-en/aion-2-classes-guide/' target='_blank' rel='noopener'>space4games: class guide</a> · <a href='https://timesaver.gg/blog/aion-2-beginner-guide' target='_blank' rel='noopener'>timesaver: beginner guide, membership gate</a></li>
+      <li><a href='https://kodex.yavuz.app/en/glossary/' target='_blank' rel='noopener'>Aion 2 Kodex glossary</a> · <a href='https://aion2guide.org/dungeons/aion-2-dungeon-entry-and-odyle-energy/' target='_blank' rel='noopener'>aion2guide: Odyle Energy</a> · <a href='https://aion2guide.org/systems/aion-2-gear-progression-guide/' target='_blank' rel='noopener'>aion2guide: gear progression</a> · <a href='https://aion2guide.org/systems/aion-2-stigma-guide/' target='_blank' rel='noopener'>aion2guide: stigmas</a></li>
+      <li><a href='https://www.sportskeeda.com/mmo/elyos-vs-asmodian-which-aion-2-faction-choose' target='_blank' rel='noopener'>sportskeeda: Elyos vs Asmodian</a> · <a href='https://overgear.com/guides/aion-2/all-you-need-to-know/' target='_blank' rel='noopener'>overgear: all you need to know</a></li>
       <li><a href='https://www.aion2timers.com/daily-reset/' target='_blank' rel='noopener'>aion2timers: reset times</a> · <a href='https://mmos.com/news/release-dates/aion-2-global-launch' target='_blank' rel='noopener'>mmos: launch date</a></li>
     </ul>
   </details>
@@ -160,137 +360,136 @@ const KEY='aion2w1.v1';
 const LISTS={
 day1:{title:'Day 1',sections:[
  {h:'Before you log in',items:[
-  {id:'d1_faction',t:'Pick faction, server and region with your friends',n:'Faction is account-level and hard to reverse. Server sets your economy and matchmaking; match your timezone.'},
-  {id:'d1_class',t:'Have two class choices ready',n:'Weapon binding means rerolling needs a fresh character, and deletion has about a one-week cooldown.'},
-  {id:'d1_alts',t:'Decide: solo main, or main + alts',n:'Entry limits are per character, so alts feed the main. But an alt only pays off if you log it daily. Casual = one main.'},
-  {id:'d1_client',t:'Client and drivers updated, disk headroom',n:'Founder’s Pack Advance Access opens Sep 30; free launch Oct 5, 06:00 PDT.'},
+  {id:'d1_faction',t:'Pick faction, server and region with your friends',n:'Faction (Elyos or Asmodian) is set per account and hard to reverse. Both play the same; the difference is looks, starting zones and who you fight. Server = your economy and matchmaking; match your timezone. If friends already picked, copy them. See Start here.'},
+  {id:'d1_class',t:'Have two class choices ready',n:'Your class is locked to the character and your weapon; there is no class change. Deleting a character has about a one-week cooldown. Never played an MMO: Ranger. Want fast groups: Templar or Cleric. Class table under Start here.'},
+  {id:'d1_alts',t:'Decide: solo main, or main + alts',n:'Dungeon entries and Odyle Energy are per character, so alts can farm the same content again and feed your main. But an alt only pays off if you log into it every day. Playing an hour or two a night? One main.'},
+  {id:'d1_client',t:'Client and drivers updated, disk headroom',n:'Founder’s Pack Advance Access opens Sep 30; free launch Mon Oct 5, 06:00 PDT, on Steam or the PURPLE launcher.'},
  ]},
  {h:'First hour',items:[
-  {id:'d1_settings',t:'Fix graphics, camera and keybinds',n:'Try both control modes (action vs classic) before you commit.'},
-  {id:'d1_skills',t:'Read every starting skill',n:'Note which ones are movement, defense, control, and resource skills. Practice one repeatable rotation.'},
-  {id:'d1_story',t:'Main story only',n:'Skip question marks, non-story campfires and puzzle rooms today. Story is what unlocks systems.'},
-  {id:'d1_nospend',t:'Spend nothing yet',n:'Don’t enhance transition gear or use scarce materials before you know what they are for.'},
-  {id:'d1_flight',t:'Learn flight',n:''},
+  {id:'d1_settings',t:'Fix graphics, camera and keybinds',n:'Steady frame rate over pretty. Try both control modes in the first fight: action (aim with the camera) and classic (tab-target like old Aion). Pick the one that feels natural and stop thinking about it.'},
+  {id:'d1_skills',t:'Read every starting skill',n:'Open the skill window and read each tooltip once. Find your movement skill, your defensive skill (dodge, block, shield) and your resource builder. Practice one repeatable rotation on trash mobs.'},
+  {id:'d1_story',t:'Main story only',n:'Follow the gold quest marker. Skip the question marks (sealed dungeons), the non-story campfires and the puzzle rooms today. The story is the fastest leveling and it unlocks every system; the side content is still there at 45 and easier then.'},
+  {id:'d1_nospend',t:'Spend nothing yet',n:'No enhancing, no socketing stones, no market buys. Everything you wear before 45 gets replaced, and Enhancement Stones and Kinah are the scarce things later. Odyle Energy: clear the story expeditions but don’t open their reward cubes; bank the energy for 45.'},
+  {id:'d1_flight',t:'Learn flight',n:'Flight has a power meter that drains. Wind paths and updrafts move you faster for less power. Gliding is nearly free. Practice landing before you cross something you can’t fall into.'},
  ]},
  {h:'Level milestones',items:[
   {id:'d1_l10',t:'Tutorial done, main story begins',lv:'Lv 10',n:'About 10–15 minutes.'},
-  {id:'d1_l12',t:'Nezekan board unlocks',lv:'Lv 12',n:'First Daevanion board.'},
-  {id:'d1_l16',t:'First dungeon, run it solo',lv:'Lv 16–18',n:'Also a check that the class feels right.'},
-  {id:'d1_l20',t:'Zikel board unlocks',lv:'Lv 20',n:''},
-  {id:'d1_l22',t:'Odyle Energy starts regenerating',lv:'Lv 22',n:'The key threshold: 15 per 3 h, 120 a day, caps at 840. About one hour in.'},
-  {id:'d1_l30',t:'Vaizel board unlocks; gold gear starts dropping',lv:'Lv 30',n:'Gold drops sell well.'},
+  {id:'d1_l12',t:'Nezekan board unlocks',lv:'Lv 12',n:'The first Daevanion board: a grid of permanent passive stats. Spend the points and crystals you get; the early nodes are the cheapest power in the game.'},
+  {id:'d1_l16',t:'First dungeon, run it solo',lv:'Lv 16–18',n:'A check that the class feels right, and a first look at how bosses telegraph. If you hate it, this is the cheap moment to swap class.'},
+  {id:'d1_l20',t:'Zikel board unlocks',lv:'Lv 20',n:'Second Daevanion board.'},
+  {id:'d1_l22',t:'Odyle Energy starts regenerating',lv:'Lv 22',n:'The key threshold. Odyle is the per-character energy that opens dungeon reward cubes: 15 per 3 h, 120 a day, capped around 560 (840 with membership). It starts filling from here, so the sooner each character hits 22, the more they bank. About one hour in.'},
+  {id:'d1_l30',t:'Vaizel board unlocks; gold gear starts dropping',lv:'Lv 30',n:'Gold-grade drops sell well once you have market access.'},
   {id:'d1_l40',t:'Triniel board unlocks',lv:'Lv 40',n:''},
-  {id:'d1_l45',t:'Cap: Ariel and Azphel boards, Nightmare, Duty Quests',lv:'Lv 45',n:'Guides estimate 4–5 hours of story to get here.'},
+  {id:'d1_l45',t:'Cap: Ariel and Azphel boards, Nightmare, Duty Quests',lv:'Lv 45',n:'Guides estimate 4–5 hours of story to get here. The Daily tab starts now.'},
  ]},
  {h:'Once you hit 45',items:[
-  {id:'d1_duty',t:'Do the 5 Duty Quests',n:'Server-wide, so one character covers them. Favor ones that give crystals for pets.'},
-  {id:'d1_towers',t:'Clear both Transcendence towers',n:'Card stat sets.'},
-  {id:'d1_stigma',t:'Farm Abyss Points, buy purchase contracts for stigmas',n:'Contracts yield more than raw farming. One coherent setup for your role.'},
-  {id:'d1_lock',t:'Lock your weapon and every accessory you care about',n:'One misclick in synthesis or extraction and it’s gone.'},
-  {id:'d1_pet',t:'Get pet auto-loot',n:'Guides quote 2–3M Kinah. Pays back fast.'},
+  {id:'d1_duty',t:'Do the 5 Duty Quests',n:'Short "kill a few of X" quests in the open world. Counted per server, so one character does them for the whole roster. They pay Abyss Points, Kinah, Enhancement Stones and Odyle. Favor the ones that give pet crystals.'},
+  {id:'d1_towers',t:'Clear both Transcendence towers',n:'Timed, graded 2–4 player dungeons. They drop Arcana cards (a five-slot card collection that adds Combat Power) and Theostones. Clearing both once at 45 gives your first card stat sets.'},
+  {id:'d1_stigma',t:'Farm Abyss Points, buy purchase contracts for stigmas',n:'Stigmas are the extra skills that define your build. The quickest first set is Abyss Points (from Rifts, Supply Requests, Duty Quests) spent on purchase contracts at the Abyss merchant. One PvE setup for your role; don’t split shards across builds.'},
+  {id:'d1_lock',t:'Lock your weapon and every accessory you care about',n:'Right-click the item, Lock. The extraction and synthesis windows will happily eat an unlocked item on one misclick.'},
+  {id:'d1_pet',t:'Get pet auto-loot',n:'Pets pick up drops for you. Guides quote 2–3M Kinah. It is the first quality-of-life purchase and it pays back fast because you stop leaving loot on the ground.'},
   {id:'d1_altlv',t:'Every alt to Lv 22',n:'So their Odyle Energy pools start filling. Skip if you chose solo main.'},
  ]},
  {h:'Before you log off',items:[
-  {id:'d1_inv',t:'Clear inventory',n:''},
+  {id:'d1_inv',t:'Clear inventory',n:'Sell vendor trash, bank materials, delete nothing you don’t recognize.'},
   {id:'d1_next',t:'Write down the next main objective',n:'Use the Notes box in Settings.'},
-  {id:'d1_panels',t:'Open every newly unlocked daily/weekly panel',n:'Check what shows a reset timer, then set the reset hour in Settings.'},
+  {id:'d1_panels',t:'Open every newly unlocked daily/weekly panel',n:'Find the in-game reset timer, then set the reset hour in Settings so this site clears at the same time the game does.'},
  ]},
  {h:'Don’t',items:[
-  {id:'d1_noreroll',t:'No rerolling because someone else is faster',n:''},
-  {id:'d1_nores',t:'No burning resurrection stones',n:'Limited and expensive.'},
-  {id:'d1_nomarket',t:'No speculative market buys; sort by unit price, not stack total',n:''},
-  {id:'d1_noalts',t:'No pile of alts',n:'Some content is a server-wide budget, not per character.'},
+  {id:'d1_noreroll',t:'No rerolling because someone else is faster',n:'Deletion has a cooldown and you lose a day of Odyle regen.'},
+  {id:'d1_nores',t:'No burning resurrection stones',n:'Limited and expensive. Walk back from the obelisk.'},
+  {id:'d1_nomarket',t:'No speculative market buys; sort by unit price, not stack total',n:'Launch-week prices are chaos. The market is also locked to members, so this may not apply yet.'},
+  {id:'d1_noalts',t:'No pile of alts',n:'Some content is a server-wide budget, not per character, and alts you don’t play give nothing.'},
  ]},
 ]},
 week1:{title:'Week 1',sections:[
  {h:'Characters',items:[
-  {id:'w1_45',t:'Main at cap (45/50) with every daily loop running',n:''},
-  {id:'w1_alts',t:'Alts at Lv 22 and logged daily',n:'Only if you chose alts.'},
-  {id:'w1_ilvl',t:'Main at item level 1,400',n:'Launch-week target from the KR/TW guides. Raise it when something you want is gated, not for the number.'},
-  {id:'w1_stig',t:'Stigma setup settled for your role',n:'Solo: damage + mobility + survival. Group DPS: boss uptime. Tank: control + durability. Healer: reliable heals first. PvP after PvE is stable.'},
-  {id:'w1_member',t:'Decide on membership',n:'Free accounts can’t use the Market or trade player-to-player. About $15/month.'},
+  {id:'w1_45',t:'Main at cap (45/50) with every daily loop running',n:'Cap is 45 at launch. From here the game is the Daily and Weekly tabs plus the permanent tracks below.'},
+  {id:'w1_alts',t:'Alts at Lv 22 and logged daily',n:'Only if you chose alts. At 22 they start banking Odyle; at 45 they can run Ascension, Daily Dungeon and Nightmare on their own entries.'},
+  {id:'w1_ilvl',t:'Main at item level 1,400',n:'Item level is the average strength of your equipped gear and it gates dungeon entry. 1,400 is the launch-week target from the KR/TW guides. Raise it when something you want is gated, not for the number. Amulet and belt first, weapon when kills are slow, the rest sparingly.'},
+  {id:'w1_stig',t:'Stigma setup settled for your role',n:'Solo: reliable damage, resource flow, mobility, survival. Group DPS: boss uptime. Tank: control and durability. Healer: reliable heals and an emergency button. PvP builds wait until PvE is stable.'},
+  {id:'w1_member',t:'Decide on membership',n:'Free accounts can’t use the Market (auction house) or trade player-to-player, and the Odyle cap is lower. About $15/month. If you never intend to buy or sell, skip it.'},
  ]},
  {h:'Permanent power (do once, never resets)',items:[
-  {id:'w1_mini',t:'Clear every solo mini-dungeon, own territory and enemy zones',n:'Portals open on a schedule; miss the window and you wait. Easier at cap but they feed Daevanion boards, so don’t leave them.'},
-  {id:'w1_feather',t:'Collect feathers along the way',n:'Progression currency, not junk.'},
-  {id:'w1_quests',t:'Regional quests and every quest you walk past',n:''},
-  {id:'w1_sealed',t:'Sealed dungeons and strongholds',n:''},
-  {id:'w1_belt',t:'Belt upgrade',n:''},
-  {id:'w1_emp',t:'Empyrean questlines: Verteron/Altgard, Eltnen/Morheim, Abyss',n:''},
+  {id:'w1_mini',t:'Clear every solo mini-dungeon, own territory and enemy zones',n:'These are the question marks on the map (sealed dungeons). They drop Daevanion crystals, Enhancement Stones and Cube keys. Portals into enemy zones open on a schedule; miss the window and you wait. Easier at cap, so now is the time.'},
+  {id:'w1_feather',t:'Collect feathers along the way',n:'Feathers are collectibles in the capital that upgrade the Monolith (permanent skill points) and the Revelation Amulet (a never-replaced accessory). Not junk.'},
+  {id:'w1_quests',t:'Regional quests and every quest you walk past',n:'Regional quests give gear, Daevanion Points and Class Runes, which add a lot of item level when upgraded.'},
+  {id:'w1_sealed',t:'Sealed dungeons and strongholds',n:'Strongholds progress your Noble Belt, one of the two slots you never replace.'},
+  {id:'w1_belt',t:'Belt upgrade',n:'Enhance the belt and the Revelation Amulet before anything else: their upgrades never get thrown away.'},
+  {id:'w1_emp',t:'Empyrean questlines: Verteron/Altgard, Eltnen/Morheim, Abyss',n:'Long zone questlines with permanent rewards. Elyos zones are Verteron and Eltnen; Asmodian are Altgard and Morheim.'},
  ]},
  {h:'Five tracks to start at cap (all at once, not in order)',items:[
-  {id:'w1_daev',t:'A — Daevanion boards',n:'Fill them from dungeons, Shugo Festival and achievements. Spread points across boards; don’t dump everything into one.'},
-  {id:'w1_arcana',t:'B — Arcana card collection started',n:'Sets; each card levels to 5; needs the right bonus/skill rolls.'},
-  {id:'w1_pets',t:'C — Pets / Genus',n:'Daily Odylium Repository dungeon, open-world mobs, Genus Insight vouchers.'},
-  {id:'w1_gold',t:'D — Golden weapon obtained and upgrading',n:'From PvP gear, dungeon drops or crafting. Extra stat slot via philosopher’s stones.'},
-  {id:'w1_pantheon',t:'E — Pantheon paintings/statues started',n:'Slowest track, which is why it starts now. Nightmare, world bosses, dungeons, market.'},
+  {id:'w1_daev',t:'A — Daevanion boards',n:'Six boards of permanent passive stats. Fill them from dungeons, Shugo Festival and achievements. Spread points across boards; the first nodes on each are the cheapest.'},
+  {id:'w1_arcana',t:'B — Arcana card collection started',n:'Five-slot card system. Cards come in sets, each levels to 5, and they need the right bonus/skill rolls. From Transcendence. Slow, so just start.'},
+  {id:'w1_pets',t:'C — Pets / Genus',n:'Pets loot and speed travel; Genus is their progression. Daily Odylium Repository dungeon, open-world mobs, Genus Insight vouchers.'},
+  {id:'w1_gold',t:'D — Golden weapon obtained and upgrading',n:'Your first real weapon. From PvP gear (Abyss Points), dungeon drops, or crafting. Unlock its extra stat slot with philosopher’s stones.'},
+  {id:'w1_pantheon',t:'E — Pantheon paintings/statues started',n:'Statues and paintings that grant passive stats. Slowest track in the game, which is why it starts now. From Nightmare, world bosses, dungeons, market.'},
  ]},
  {h:'Before the first weekly reset',items:[
   {id:'w1_weeklies',t:'Every weekly cap hit (see Weekly tab)',n:'Presumed Wed Oct 7 for global. Do them early in the week, not the last night.'},
-  {id:'w1_odyle',t:'Odyle Energy spent below cap on every character',n:'840 cap; anything above it is lost regen.'},
-  {id:'w1_shop',t:'Weekly shop purchases and crafts done',n:''},
-  {id:'w1_pass',t:'Daeva Pass progressed on every character',n:''},
+  {id:'w1_odyle',t:'Odyle Energy spent below cap on every character',n:'Regen above the cap is lost. Spend it on Conquest, Transcendence and raid cubes.'},
+  {id:'w1_shop',t:'Weekly shop purchases and crafts done',n:'The Abyss shop and others have weekly buy limits (Medals of Merit). Use them.'},
+  {id:'w1_pass',t:'Daeva Pass progressed on every character',n:'The season pass. Its daily and weekly missions overlap with everything else here.'},
   {id:'w1_season',t:'Seasonal missions kept up daily',n:''},
  ]},
 ]},
 daily:{title:'Daily',sections:[
  {h:'Fixed per day',items:[
-  {id:'da_duty',t:'Duty Quests',max:5,lv:'Lv 45',n:'Server-wide: one character does them for the whole server. Abyss Points, Kina, enhance stones, Odyle, Hidden Cube keys.'},
-  {id:'da_night',t:'Nightmare',max:2,lv:'Lv 45',n:'Solo boss. 2 tickets a day, bank up to 14. Dream Fragments, Soul Codex, Daevanion crystals, wings, statues.'},
-  {id:'da_conq',t:'Expedition: Conquest',max:3,lv:'4-player',k:'grp',n:'Equipment.'},
-  {id:'da_trans',t:'Transcendence',max:2,lv:'2–4 player',k:'grp',n:'Arcana, Theostones, Amplify Stone fragments.'},
-  {id:'da_shugo',t:'Shugo Festival',max:2,lv:'Lv 13',n:'4–9 player minigames, runs every 15–30 min. 2 keys a day, bank up to 14.'},
-  {id:'da_rift',t:'Spacetime Rifts',max:6,lv:'PvP',k:'pvp',n:'Opposite-faction zone, opens every 4 h. Sealed dungeons, rift quests, Abyss Points.'},
+  {id:'da_duty',t:'Duty Quests',max:5,lv:'Lv 45',n:'Five short open-world quests. Per server: one character does them for the whole roster. Abyss Points, Kinah, Enhancement Stones, Odyle, Hidden Cube keys.'},
+  {id:'da_night',t:'Nightmare',max:2,lv:'Lv 45',n:'Solo boss fight. 2 tickets a day, bank up to 14, so skipping a day loses nothing until the stack is full. Dream Fragments, Soul Codex, Daevanion crystals, wings, Pantheon statues.'},
+  {id:'da_conq',t:'Expedition: Conquest',max:3,lv:'4-player',k:'grp',n:'The daily 4-player dungeon. Gear drops. Each reward cube costs about 40 Odyle.'},
+  {id:'da_trans',t:'Transcendence',max:2,lv:'2–4 player',k:'grp',n:'Timed, graded dungeon. Arcana cards, Theostones, Amplify Stone fragments. Costs Odyle to open the cube.'},
+  {id:'da_shugo',t:'Shugo Festival',max:2,lv:'Lv 13',n:'4–9 player minigames that run every 15–30 min. 2 keys a day, bank up to 14. Daevanion crystals, gear, pets, decor.'},
+  {id:'da_rift',t:'Spacetime Rifts',max:6,lv:'PvP',k:'pvp',n:'Red portals into enemy territory, open every 4 h. Rift quests, sealed dungeons on the other side, Abyss Points. You can be attacked there.'},
   {id:'da_inv',t:'Invasion key used',max:1,n:'1 key a day, bank up to 7.'},
  ]},
  {h:'Upkeep',items:[
-  {id:'da_odyle',t:'Odyle Energy spent, every character under 840',lv:'Lv 22',n:'120 regen a day, 40 per loot box.'},
-  {id:'da_repo',t:'Odylium Repository (pets / Genus)',n:''},
-  {id:'da_supply',t:'Emergency Supply Requests',n:'Deliver materials or gear parts for Abyss Points. Shared board, doubles as a market-trend read.'},
-  {id:'da_season',t:'Seasonal missions and Daeva Pass dailies',n:''},
-  {id:'da_circuit',t:'Zone circuit: Verteron/Altgard, Eltnen/Morheim',n:'Batch the Duty Quests into this loop.'},
-  {id:'da_lock',t:'New gear locked',n:''},
+  {id:'da_odyle',t:'Odyle Energy spent, every character under cap',lv:'Lv 22',n:'120 regen a day; cap about 560 free / 840 member; 40 per reward cube. Sitting at cap wastes regen.'},
+  {id:'da_repo',t:'Odylium Repository (pets / Genus)',n:'The daily pet-progression dungeon.'},
+  {id:'da_supply',t:'Emergency Supply Requests',n:'Deliver materials or gear parts for Abyss Points. The board is shared by everyone, so it also shows what the server wants.'},
+  {id:'da_season',t:'Seasonal missions and Daeva Pass dailies',n:'Check the pass window; most of these complete on their own while you do the rest.'},
+  {id:'da_circuit',t:'Zone circuit: Verteron/Altgard, Eltnen/Morheim',n:'A loop through the two mid zones for world bosses and drops. Batch the Duty Quests into this loop.'},
+  {id:'da_lock',t:'New gear locked',n:'Anything you got today that you plan to keep: right-click, Lock.'},
  ]},
 ]},
 weekly:{title:'Weekly',sections:[
  {h:'Per character',items:[
-  {id:'wk_dd',t:'Daily Dungeon',max:14,n:'90-second wave runs, up to 10k enhance stones per entry. A missed day cannot be made up. Some guides say 7; edit the cap if your panel shows 7.'},
-  {id:'wk_asc',t:'Ascension Trial',max:3,n:'Solo. Selentium, Daevanion Crystal: Ariel fragments, manastones/soulstones. Alts repeat.'},
-  {id:'wk_raid',t:'Raid',max:3,lv:'4-player',k:'grp',n:'Amplify Stone (fragments), Daevanion Crystal: Ariel fragments, enhance stones.'},
-  {id:'wk_expl',t:'Expedition: Exploration',max:7,n:'Vakron Sky Island (ilvl 1600), Ferocious Horn Den (2200).'},
-  {id:'wk_bf',t:'Battlefield wins',max:3,lv:'PvP',k:'pvp',n:'Victory rewards, per character. Scheduled.'},
-  {id:'wk_abyss',t:'Abyss hours',max:7,lv:'PvP',k:'pvp',n:'PvP gear, stigma shards, Theostones, ranking.'},
-  {id:'wk_event',t:'Abyss events',max:2,lv:'PvP',k:'pvp',n:'Wed and Sat, presumed.'},
-  {id:'wk_sanct',t:'Sanctuary',max:2,lv:'10-player',k:'grp',n:'CP 2700+. Low priority in week one.'},
-  {id:'wk_morph',t:'Odyle Energy Morph',max:7,n:'Odyle recharge currency for cube rewards.'},
-  {id:'wk_ladra',t:'Ladra raid',max:2,lv:'10-player',k:'grp',n:''},
+  {id:'wk_dd',t:'Daily Dungeon',max:14,n:'90-second solo wave run: kill as many as you can. Up to 10k Enhancement Stones per entry, the best stone source you have. Entries do not bank, so a missed day is lost. Some guides say 7 a week; edit the cap if your panel shows 7.'},
+  {id:'wk_asc',t:'Ascension Trial',max:3,n:'Solo dungeon. Selentium, Daevanion Crystal: Ariel fragments, manastones and soulstones. Alts get their own 3.'},
+  {id:'wk_raid',t:'Raid',max:3,lv:'4-player',k:'grp',n:'Amplify Stones and fragments, Daevanion Crystal: Ariel fragments, Enhancement Stones. Needs a group; ask your Legion.'},
+  {id:'wk_expl',t:'Expedition: Exploration',max:7,n:'Weekly dungeon with item-level gates: Vakron Sky Island at 1600, Ferocious Horn Den at 2200. Kinah, stones, gear.'},
+  {id:'wk_bf',t:'Battlefield wins',max:3,lv:'PvP',k:'pvp',n:'Scheduled instanced PvP. Victory rewards, 3 per character. Check the schedule in the Abyss window.'},
+  {id:'wk_abyss',t:'Abyss hours',max:7,lv:'PvP',k:'pvp',n:'Time spent in the shared PvP zone. PvP gear, stigma shards, Theostones, ranking.'},
+  {id:'wk_event',t:'Abyss events',max:2,lv:'PvP',k:'pvp',n:'Scheduled faction fights (300 a side). Wed and Sat, presumed.'},
+  {id:'wk_sanct',t:'Sanctuary',max:2,lv:'10-player',k:'grp',n:'Boss content that needs about CP 2700. Not a week-one thing; hide it if you like.'},
+  {id:'wk_morph',t:'Odyle Energy Morph',max:7,n:'Substance-morph activity that gives Odyle recharge currency for cube rewards.'},
+  {id:'wk_ladra',t:'Ladra raid',max:2,lv:'10-player',k:'grp',n:'The 10-player raid. Later-week content.'},
  ]},
  {h:'Per server (one character covers it)',items:[
-  {id:'wk_cmd',t:'Command Missions (PvE weekly quests)',max:12,n:'Command merchant. Purchase contracts, Abyss Points, Kina, enhance stones, gear.'},
-  {id:'wk_pvpq',t:'PvP weekly quests',max:20,lv:'PvP',k:'pvp',n:'Abyss merchant.'},
+  {id:'wk_cmd',t:'Command Missions (PvE weekly quests)',max:12,n:'From the Command merchant. Purchase contracts (for stigmas), Abyss Points, Kinah, Enhancement Stones, gear.'},
+  {id:'wk_pvpq',t:'PvP weekly quests',max:20,lv:'PvP',k:'pvp',n:'From the Abyss merchant.'},
  ]},
  {h:'Before reset',items:[
-  {id:'wk_supply',t:'Weekly Supply Requests',n:'Seasonal delivery orders.'},
-  {id:'wk_shop',t:'Weekly shop limits bought, weekly crafts done',n:''},
+  {id:'wk_supply',t:'Weekly Supply Requests',n:'Seasonal delivery orders for Abyss Points.'},
+  {id:'wk_shop',t:'Weekly shop limits bought, weekly crafts done',n:'Medals of Merit and other capped currencies. Anything unspent at reset is a lost week of value.'},
   {id:'wk_odyle',t:'Substance morph and subscriber shop Odyle spent',n:'20 on main + 4 per alt each.'},
   {id:'wk_pass',t:'Daeva Pass weeklies',n:''},
  ]},
 ]},
 };
-const TABS=['day1','week1','daily','weekly','settings'];
-const TABNAME={day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
-const RESETS={daily:'daily',weekly:'weekly'};       // which lists auto-clear
+const TABS=['start','day1','week1','daily','weekly','settings'];
+const TABNAME={start:'Start here',day1:'Day 1',week1:'Week 1',daily:'Daily',weekly:'Weekly',settings:'Settings'};
 const DEF_CFG={resetHour:5,resetDay:3,startDate:'2026-09-30'};
 
 // ---------- state ----------
-let S=null, tab='day1', showHidden=false;
-function blank(){return {done:{},cnt:{},hidden:{},custom:{day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'day1'};}
+let S=null, tab='start', showHidden=false;
+function blank(){return {done:{},cnt:{},hidden:{},custom:{day1:[],week1:[],daily:[],weekly:[]},caps:{},period:{},cfg:{...DEF_CFG},notes:'',tab:'start'};}
 function load(){
   try{const raw=localStorage.getItem(KEY);S=raw?Object.assign(blank(),JSON.parse(raw)):blank();}
   catch(e){S=blank();}
   S.cfg=Object.assign({...DEF_CFG},S.cfg||{});
   for(const l of Object.keys(LISTS)) if(!S.custom[l]) S.custom[l]=[];
-  tab=TABS.includes(S.tab)?S.tab:'day1';
+  tab=TABS.includes(S.tab)?S.tab:'start';
 }
 function save(){try{S.tab=tab;localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 
@@ -351,7 +550,7 @@ function addCustom(l){
 function delCustom(l,id){
   S.custom[l]=S.custom[l].filter(c=>c.id!==id);delete S.done[id];delete S.cnt[id];delete S.hidden[id];save();render();
 }
-function setTab(t){tab=t;save();render();}
+function setTab(t){tab=t;save();render();window.scrollTo({top:0});}
 function toggleShowHidden(){showHidden=!showHidden;$('shbtn').textContent=showHidden?'Hide hidden items':'Show hidden items';render();}
 
 // ---------- settings ----------
