@@ -367,9 +367,9 @@ input[type=range]{accent-color:var(--accent);margin:6px 0 0}
         <li>Recast <b>Snare Shot</b> every ~5 s so Burst and Explosive Arrow keep hitting.</li>
       </ol>
       <p>Turn on the <b>Skill Queue</b> option in settings so held keys chain cleanly. Then build the game's own macro with a 10 ms delay:</p>
-      <div class='formula'>Line 1:  Gale Arrow → Griffon Arrow → Snare Shot → Explosive Arrow
-Line 2:  Drill Dart → Burst Arrow → Tempest Shot
-Line 3:  Vaizel's Authority → Supporting Fire → Bow of Blessing</div>
+      <div class='formula'>Line 1:  Gale Arrow → Snare Shot → Burst Arrow → Explosive Arrow → Griffon Arrow
+Line 2:  Drill Dart → Tempest Shot
+Line 3:  Vaizel's Authority → Supporting Fire → Bow of Blessing   (or on one key, pressed together on bosses)</div>
       <div class='callout bad'>Keep these <b>out</b> of the macro and on your own fingers: Deadshot (the charge gets interrupted), Marking Shot, Defiance, traps, movement, and any boss-specific cooldown. The three most common Ranger mistakes are charging Deadshot without Precision, charging it right before a forced move, and treating Burst Arrow or Scattershot as unconditional filler.</div>
 
       <h3>Setting it up, click by click</h3>
@@ -378,12 +378,12 @@ Line 3:  Vaizel's Authority → Supporting Fire → Bow of Blessing</div>
       <p><b>2. Build it.</b> Open the <b>Skill</b> window. Top right is a <b>Macro</b> button with 1, 2, 3 next to it (one macro per skill preset; stay on 1). Click Macro. You get numbered slots, each with a <b>Delay</b> box. Click a slot, pick a skill. Fill them in this order, skipping what you don't have yet:</p>
       <table>
         <tr><th>Slot</th><th>Skill</th><th>When you get it</th></tr>
-        <tr><td>1</td><td>Drill Dart</td><td>early</td></tr>
-        <tr><td>2</td><td>Tempest Shot</td><td>Lv 16</td></tr>
-        <tr><td>3</td><td>Gale Arrow</td><td>early</td></tr>
-        <tr><td>4</td><td>Snare Shot</td><td>early</td></tr>
-        <tr><td>5</td><td>Explosive Arrow</td><td>stigma</td></tr>
-        <tr><td>6</td><td>Griffon Arrow</td><td>stigma, if taken</td></tr>
+        <tr><td>1</td><td>Gale Arrow</td><td>early</td></tr>
+        <tr><td>2</td><td>Snare Shot</td><td>early</td></tr>
+        <tr><td>3</td><td>Burst Arrow</td><td>Lv 10</td></tr>
+        <tr><td>4</td><td>Drill Dart</td><td>early</td></tr>
+        <tr><td>5</td><td>Tempest Shot</td><td>early</td></tr>
+        <tr><td>6</td><td>Explosive Arrow / Griffon Arrow</td><td>stigma</td></tr>
         <tr><td>7</td><td>Vaizel's Authority</td><td>stigma, Lv 22–23</td></tr>
         <tr><td>8</td><td>Supporting Fire</td><td>stigma</td></tr>
         <tr><td>9</td><td>Bow of Blessing</td><td>stigma</td></tr>
@@ -789,7 +789,7 @@ ranger:{title:'Ranger',sections:[
  {h:'Settings and controls',items:[
   {id:'rg_queue',t:'Skill Queue option turned on',n:'Lets held keys chain skills without gaps.'},
   {id:'rg_key',t:'Macro key bound (Settings → Key Settings → General → Gameplay → Macro)',n:'Side mouse button or right click.'},
-  {id:'rg_macro',t:'In-game macro built, 10 ms every slot, Repeat while held on',n:'Drill Dart, Tempest Shot, Gale Arrow, Snare Shot, then the stigmas as you get them: Explosive Arrow, Griffon Arrow, Vaizel’s Authority, Supporting Fire, Bow of Blessing. Steps in the Rotation section above.'},
+  {id:'rg_macro',t:'In-game macro built, 10 ms every slot, Repeat while held on',n:'Gale Arrow, Snare Shot, Burst Arrow, Drill Dart, Tempest Shot, then the stigmas as you get them: Explosive Arrow, Griffon Arrow, Vaizel’s Authority, Supporting Fire, Bow of Blessing. Steps in the Rotation section above.'},
   {id:'rg_test',t:'Tested on a scarecrow with Combat Analysis (Ctrl + X)',n:'Deadshot should come back often. If not, something in the macro is blocking the Snipe chain.'},
   {id:'rg_manual',t:'Deadshot, Marking Shot, Defiance and traps on their own keys',n:'Never in the macro.'},
   {id:'rg_dodge',t:'Dodge key comfortable, stamina bar visible',n:''},
@@ -834,13 +834,13 @@ const DEF_CFG={resetHour:5,resetDay:3,startDate:'2026-09-30'};
 const RG_SKILLS=[
  {n:'Snipe',t:'a',lv:1,use:'basic',key:'LMB',d:'Basic attack, 20 m. Restores MP; every hit shortens Deadshot’s cooldown.'},
  {n:'Marking Shot',t:'a',lv:1,use:'manual',key:'2',d:'Gives you Precision (+Critical Hit). Deadshot hits 35% harder while it’s up.'},
- {n:'Tempest Shot',t:'a',lv:1,use:'macro',ord:2,d:'Hits the target and up to 4 enemies near it.'},
- {n:'Snare Shot',t:'a',lv:1,use:'macro',ord:3,d:'Slows the target 40% for 5 s. Turns Burst Arrow and Explosive Arrow on.'},
- {n:'Drill Dart',t:'a',lv:1,use:'macro',ord:7,d:'Bleed. Restores MP on a crit. A main damage source.'},
+ {n:'Tempest Shot',t:'a',lv:1,use:'macro',ord:5,d:'Hits the target and up to 4 enemies near it.'},
+ {n:'Snare Shot',t:'a',lv:1,use:'macro',ord:2,d:'Slows the target 40% for 5 s. Turns Burst Arrow and Explosive Arrow on.'},
+ {n:'Drill Dart',t:'a',lv:1,use:'macro',ord:4,d:'Bleed. Restores MP on a crit. A main damage source.'},
  {n:'Arrow Scattershot',t:'a',lv:5,use:'sit',key:'5',d:'Only hits a staggered target. Boss stagger windows.'},
  {n:'Gale Arrow',t:'a',lv:7,use:'macro',ord:1,d:'+7% Combat Speed buff. Keeps the whole rotation fast.'},
  {n:'Explosion Trap',t:'a',lv:8,use:'manual',key:'3',d:'Trap at your feet, 40% stun. Drop it when something gets close, then back off.'},
- {n:'Burst Arrow',t:'a',lv:10,use:'macro',ord:4,d:'Hard hit, only on a slowed or rooted target. Goes right after Snare Shot.'},
+ {n:'Burst Arrow',t:'a',lv:10,use:'macro',ord:3,d:'Hard hit, only on a slowed or rooted target. Goes right after Snare Shot.'},
  {n:'Suppressing Arrow',t:'a',lv:12,use:'sit',key:'4',d:'40% stun while Precision is up. Interrupt.'},
  {n:'Deadshot',t:'a',lv:14,use:'manual',key:'1',d:'Charged shot, your biggest hit. Press when it lights up and you can stand still.'},
  {n:'Defiance',t:'a',lv:16,use:'sit',key:'6',d:'Cleanses crowd control, 5 s immunity. Panic button.'},
@@ -857,8 +857,8 @@ const RG_SKILLS=[
  {n:'Vaizel’s Authority',t:'s',lv:22,use:'macro',ord:8,pri:1,d:'+20% Attack. The number-one stigma.'},
  {n:'Supporting Fire',t:'s',lv:22,use:'macro',ord:9,pri:2,d:'Summons an orb that shoots with you for 15 s.'},
  {n:'Bow of Blessing',t:'s',lv:22,use:'macro',ord:10,pri:3,d:'+200 Critical Hit, +100 Accuracy.'},
- {n:'Explosive Arrow',t:'s',lv:22,use:'macro',ord:5,pri:4,d:'Big hit, +20% on a slowed or rooted target.'},
- {n:'Griffon Arrow',t:'s',lv:22,use:'macro',ord:6,pri:5,d:'Burn damage over time.'},
+ {n:'Explosive Arrow',t:'s',lv:22,use:'macro',ord:6,pri:4,d:'Big hit, +20% on a slowed or rooted target.'},
+ {n:'Griffon Arrow',t:'s',lv:22,use:'macro',ord:7,pri:5,d:'Burn damage over time.'},
  {n:'Mother Nature’s Breath',t:'s',lv:22,use:'sit',key:'7',pri:6,d:'Damage reduction, 25% absorb chance. Swap in for Explosive Arrow in dungeons you don’t know yet.'},
  {n:'Arrow Storm',t:'s',lv:22,use:'sit',key:'8',pri:7,d:'Area stun on up to 4 enemies. Packs and PvP.'},
  {n:'Illusory Arrow',t:'s',lv:22,use:'skip',d:'Blind. Alternative slot; manual.'},
